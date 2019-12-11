@@ -34,6 +34,8 @@
         </div>
     </nav>
 
+    @Scripts.Render("~/content/jquery/dist/jquery.min.js")
+
     <div class="container body-content">
         @RenderBody()
 
@@ -41,6 +43,7 @@
             @*<p>&copy; @DateTime.Now.Year - RadioCentro</p>*@
         </footer>
     </div>
+
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")

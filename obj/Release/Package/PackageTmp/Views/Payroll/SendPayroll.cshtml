@@ -1,0 +1,127 @@
+﻿
+@{
+    ViewBag.Title = "Enviar Volantes";
+}
+
+<div class="container col-12 shadow-lg p-3 mb-5 bg-white rounded">
+    <h3 class="bg-secondary text-light pl-2 pr-2">Enviar Volantes</h3>
+
+    <div class="row">
+        <div class="col-5 pb-3 pt-3 bg-light">
+            <form>
+                <div class="form-row">
+                    <div class="col-2 mb-3">
+                        <label for="validationDefault01">Año</label>
+                        <select class="custom-select" required>
+                            <option value="2019">2019</option>
+                            <option value="2020">2020</option>
+                        </select>
+                    </div>
+                    <div class="col-4 mb-3">
+                        <label for="validationDefault01">Mes</label>
+                        <select class="custom-select" required>
+                            <option value="1">Enero</option>
+                            <option value="2">Febrero</option>
+                            <option value="3">Marzo</option>
+                            <option value="4">Abril</option>
+                            <option value="5">Mayo</option>
+                            <option value="6">Junio</option>
+                            <option value="7">Julio</option>
+                            <option value="8">Agosto</option>
+                            <option value="9">Septiembre</option>
+                            <option value="10">Octubre</option>
+                            <option value="11">Noviembre</option>
+                            <option value="12">Diciembre</option>
+                        </select>
+                    </div>
+                    <div class="col-2 mb-3">
+                        <label for="validationDefault01">Quincena</label>
+                        <select class="custom-select" required>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="custom-control custom-radio mt-3">
+                    <input type="radio" class="custom-control-input" id="sendToAll" name="radio-stacked" required>
+                    <label class="custom-control-label" for="customControlValidation2">Enviar a todos</label>
+                </div>
+                <div class="custom-control custom-radio mb-5 mt-3">
+                    <input type="radio" class="custom-control-input" id="customControlValidation3" name="radio-stacked" required>
+                    <label class="custom-control-label" for="customControlValidation3">Enviar a un empleado</label>
+                    <input type="text" class="form-control d-inline" id="idEmployeeId" placeholder="Cod. Empleado" style="margin-top: -12px; width: 160px">
+                </div>
+
+                <button class="btn btn-danger w-25" type="submit">
+                    Enviar
+                </button>
+
+                <span class="d-block bg-light text-info pl-2 pr-2 pb-1 pt-1 mt-3">Los volantes han sido enviados</span>
+            </form>
+        </div>
+
+        <div class="float-right col-7 d-inline" style="height:500px; overflow: scroll">
+            <table class="table">
+                <thead class="bg-danger text-white">
+                    <tr>
+                        <th scope="col" class="text-center">Volantes Enviados</th>
+                        <th scope="col" class="text-center">Fecha</th>                        
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th scope="row" class="text-center">11</th>
+                        <td class="text-center">25/04/2019</td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="text-center">11</th>
+                        <td class="text-center">25/04/2019</td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="text-center">11</th>
+                        <td class="text-center">25/04/2019</td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="text-center">11</th>
+                        <td class="text-center">25/04/2019</td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="text-center">11</th>
+                        <td class="text-center">25/04/2019</td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="text-center">11</th>
+                        <td class="text-center">25/04/2019</td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="text-center">11</th>
+                        <td class="text-center">25/04/2019</td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="text-center">11</th>
+                        <td class="text-center">25/04/2019</td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="text-center">11</th>
+                        <td class="text-center">25/04/2019</td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="text-center">11</th>
+                        <td class="text-center">25/04/2019</td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="text-center">11</th>
+                        <td class="text-center">25/04/2019</td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="text-center">11</th>
+                        <td class="text-center">25/04/2019</td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+</div>
+
+

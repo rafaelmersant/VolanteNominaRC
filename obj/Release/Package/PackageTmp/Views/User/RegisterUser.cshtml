@@ -1,0 +1,55 @@
+﻿
+@{
+    ViewBag.Title = "Registrar nuevo usuario";
+}
+
+<div class="container col-8 shadow-lg p-3 mb-5 bg-white rounded">
+    <h3 class="bg-secondary text-light pl-2 pr-2">Nuevo Usuario</h3>
+    <div class="col-12 pb-3 pt-3 bg-light">
+        <form>
+            <div class="form-row">
+                <div class="col-4 mb-3">
+                    <label for="validationDefault01">Código de Empleado</label>
+                    <input type="text" class="form-control" id="idEmployeeId" required>
+                </div>
+                <div class="col-8 mb-3">
+                    <label for="validationDefault02">Cédula</label>
+                    <input type="text" class="form-control col-12" id="idCedulaNo" required>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="col-4">
+                    <label for="validationDefault02">Contraseña</label>
+                    <input type="text" class="form-control col-12" id="idPassword" required>
+                </div>
+                <div class="col-6 mb-3">
+                    <label for="validationDefaultUsername">Correo</label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="idEmailDeco">@@</span>
+                        </div>
+                        <input type="text" class="form-control col-12" id="idEmail" aria-describedby="inputGroupPrepend2" required>
+                    </div>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="col-4 mb-5">
+                    <label for="validationDefault02">Rol</label>
+                    <select class="custom-select" required>
+                        <option value="Admin">Admin</option>
+                        <option value="Consulta">Consulta</option>
+                    </select>
+                </div>
+                
+            </div>
+
+            <button class="btn btn-danger w-100" type="submit">
+                Crear Usuario
+            </button>
+
+            <span class="d-block bg-light text-info pl-2 pr-2 pb-1 pt-1 mt-3 mb-0 text-center">El usuario ha sido creado exitosamente!</span>
+
+        </form>
+    </div>
+</div>
+

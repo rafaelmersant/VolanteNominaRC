@@ -84,3 +84,7 @@ C:\Users\rafae\source\repos\VolanteNominaRC\VolanteNominaRC\obj\Debug\VolanteNom
 C:\Users\rafae\source\repos\VolanteNominaRC\VolanteNominaRC\obj\Debug\VolanteNominaRC.csproj.CopyComplete
 C:\Users\rafae\source\repos\VolanteNominaRC\VolanteNominaRC\obj\Debug\VolanteNominaRC.dll
 C:\Users\rafae\source\repos\VolanteNominaRC\VolanteNominaRC\obj\Debug\VolanteNominaRC.pdb
+C:\Users\rafae\source\repos\VolanteNominaRC\VolanteNominaRC\bin\EntityFramework.dll
+C:\Users\rafae\source\repos\VolanteNominaRC\VolanteNominaRC\bin\EntityFramework.SqlServer.dll
+C:\Users\rafae\source\repos\VolanteNominaRC\VolanteNominaRC\bin\EntityFramework.xml
+C:\Users\rafae\source\repos\VolanteNominaRC\VolanteNominaRC\bin\EntityFramework.SqlServer.xml
