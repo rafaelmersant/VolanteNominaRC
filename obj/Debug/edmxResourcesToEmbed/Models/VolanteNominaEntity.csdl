@@ -16,8 +16,8 @@
       <PropertyRef Name="EmployeeID" />
     </Key>
     <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="IdHash" Type="Guid" Nullable="false" />
     <Property Name="EmployeeID" Type="String" Nullable="false" MaxLength="4" FixedLength="true" Unicode="false" />
-    <Property Name="Password" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
     <Property Name="PasswordHash" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
     <Property Name="Identification" Type="String" MaxLength="11" FixedLength="true" Unicode="false" />
     <Property Name="Role" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />

@@ -17,8 +17,8 @@
           <ScalarProperty Name="Role" ColumnName="Role" />
           <ScalarProperty Name="Identification" ColumnName="Identification" />
           <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
-          <ScalarProperty Name="Password" ColumnName="Password" />
           <ScalarProperty Name="EmployeeID" ColumnName="EmployeeID" />
+          <ScalarProperty Name="IdHash" ColumnName="IdHash" />
           <ScalarProperty Name="Id" ColumnName="Id" />
         </MappingFragment>
       </EntityTypeMapping>

@@ -12,8 +12,8 @@
       <PropertyRef Name="EmployeeID" />
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="IdHash" Type="uniqueidentifier" Nullable="false" />
     <Property Name="EmployeeID" Type="char" MaxLength="4" Nullable="false" />
-    <Property Name="Password" Type="varchar" MaxLength="100" Nullable="false" />
     <Property Name="PasswordHash" Type="varchar" MaxLength="200" />
     <Property Name="Identification" Type="char" MaxLength="11" />
     <Property Name="Role" Type="varchar" MaxLength="10" />

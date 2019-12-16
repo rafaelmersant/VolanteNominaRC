@@ -16,16 +16,22 @@ namespace VolanteNominaRC.Controllers
 
         public ActionResult SendPayroll()
         {
+            if (Session["role"] == null) return RedirectToAction("Login", "User");
+
             return View();
         }
 
         public ActionResult HistoryPayrollSent()
         {
+            if (Session["role"] == null) return RedirectToAction("Login", "User");
+
             return View();
         }
 
         public ActionResult PayrollsByEmployee()
         {
+            if (Session["role"] == null) return RedirectToAction("Login", "User");
+
             return View();
         }
     }

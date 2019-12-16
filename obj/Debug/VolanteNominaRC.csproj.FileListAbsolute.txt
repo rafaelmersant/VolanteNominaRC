@@ -48,6 +48,8 @@ C:\Users\rafae\source\repos\VolanteNominaRC\VolanteNominaRC\bin\roslyn\vbc.rsp
 C:\Users\rafae\source\repos\VolanteNominaRC\VolanteNominaRC\bin\roslyn\VBCSCompiler.exe
 C:\Users\rafae\source\repos\VolanteNominaRC\VolanteNominaRC\bin\roslyn\VBCSCompiler.exe.config
 C:\Users\rafae\source\repos\VolanteNominaRC\VolanteNominaRC\bin\Antlr3.Runtime.dll
+C:\Users\rafae\source\repos\VolanteNominaRC\VolanteNominaRC\bin\EntityFramework.dll
+C:\Users\rafae\source\repos\VolanteNominaRC\VolanteNominaRC\bin\EntityFramework.SqlServer.dll
 C:\Users\rafae\source\repos\VolanteNominaRC\VolanteNominaRC\bin\Microsoft.AspNet.TelemetryCorrelation.dll
 C:\Users\rafae\source\repos\VolanteNominaRC\VolanteNominaRC\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
 C:\Users\rafae\source\repos\VolanteNominaRC\VolanteNominaRC\bin\Microsoft.Web.Infrastructure.dll
@@ -64,6 +66,8 @@ C:\Users\rafae\source\repos\VolanteNominaRC\VolanteNominaRC\bin\System.Web.WebPa
 C:\Users\rafae\source\repos\VolanteNominaRC\VolanteNominaRC\bin\System.Web.WebPages.dll
 C:\Users\rafae\source\repos\VolanteNominaRC\VolanteNominaRC\bin\System.Web.WebPages.Razor.dll
 C:\Users\rafae\source\repos\VolanteNominaRC\VolanteNominaRC\bin\WebGrease.dll
+C:\Users\rafae\source\repos\VolanteNominaRC\VolanteNominaRC\bin\EntityFramework.xml
+C:\Users\rafae\source\repos\VolanteNominaRC\VolanteNominaRC\bin\EntityFramework.SqlServer.xml
 C:\Users\rafae\source\repos\VolanteNominaRC\VolanteNominaRC\bin\System.Web.Helpers.xml
 C:\Users\rafae\source\repos\VolanteNominaRC\VolanteNominaRC\bin\System.Web.Mvc.xml
 C:\Users\rafae\source\repos\VolanteNominaRC\VolanteNominaRC\bin\System.Web.Optimization.xml
@@ -84,7 +88,3 @@ C:\Users\rafae\source\repos\VolanteNominaRC\VolanteNominaRC\obj\Debug\VolanteNom
 C:\Users\rafae\source\repos\VolanteNominaRC\VolanteNominaRC\obj\Debug\VolanteNominaRC.csproj.CopyComplete
 C:\Users\rafae\source\repos\VolanteNominaRC\VolanteNominaRC\obj\Debug\VolanteNominaRC.dll
 C:\Users\rafae\source\repos\VolanteNominaRC\VolanteNominaRC\obj\Debug\VolanteNominaRC.pdb
-C:\Users\rafae\source\repos\VolanteNominaRC\VolanteNominaRC\bin\EntityFramework.dll
-C:\Users\rafae\source\repos\VolanteNominaRC\VolanteNominaRC\bin\EntityFramework.SqlServer.dll
-C:\Users\rafae\source\repos\VolanteNominaRC\VolanteNominaRC\bin\EntityFramework.xml
-C:\Users\rafae\source\repos\VolanteNominaRC\VolanteNominaRC\bin\EntityFramework.SqlServer.xml

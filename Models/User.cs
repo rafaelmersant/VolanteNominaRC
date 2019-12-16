@@ -15,8 +15,8 @@ namespace VolanteNominaRC.Models
     public partial class User
     {
         public int Id { get; set; }
+        public System.Guid IdHash { get; set; }
         public string EmployeeID { get; set; }
-        public string Password { get; set; }
         public string PasswordHash { get; set; }
         public string Identification { get; set; }
         public string Role { get; set; }
