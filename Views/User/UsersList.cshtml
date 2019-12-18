@@ -38,26 +38,28 @@
                 <th></th>
             </tr>
         </thead>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>@item.EmployeeID</td>
-                <td>@item.Email</td>
-                <td>@item.Identification</td>
-                <td>@item.Role</td>
-                <td>@item.CreatedDate</td>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.EmployeeID</td>
+                    <td>@item.Email</td>
+                    <td>@item.Identification</td>
+                    <td>@item.Role</td>
+                    <td>@item.CreatedDate</td>
 
-                <td align="center">
-                    <a class="btn btn-sm btn-success" href="@Url.Action("Edit",new { id = @item.IdHash })">
-                        <i class="fa fa-edit"></i>
+                    <td align="center">
+                        <a class="btn btn-sm btn-success" href="@Url.Action("Edit",new { idHash = @item.IdHash })">
+                            <i class="fa fa-edit"></i>
 
-                    </a>
-                    <a class="btn btn-sm btn-danger" href="@Url.Action("Delete", new { id = @item.IdHash })">
-                        <i class="fa fa-remove"></i>
-                    </a>
-                </td>
-            </tr>
-        }
+                        </a>
+                        <a class="btn btn-sm btn-danger" href="javascript:void(0)" onclick="deleteUser(@item.EmployeeID,@item.Id)">
+                            <i class="fa fa-remove"></i>
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
     </table>
 </div>
 
@@ -69,6 +71,24 @@
     
 }
 <script type="text/javascript">
+
+    const deleteUser = (codigo, id) => {
+        if (confirm(`Seguro que desea eliminar al Empleado de código ${codigo} ?`)) {
+            $.ajax({
+                "url": "/User/Delete?id=" + id,
+                "type": "POST",
+                "success": function (response) {
+                    if (response.result === "200") {
+                        window.location.reload();
+                    } else {
+                        console.log(response.message);
+                        alert('Hubo un error tratando de eliminar el usuario (Contacte al administrador del sistema).');
+                    }
+                }
+            });
+        }
+    }
+
     $(document).ready(function () {
         $("#usersTable").DataTable();
 

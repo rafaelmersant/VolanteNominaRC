@@ -386,6 +386,8 @@
     <Content Include="Views\Payroll\HistoryPayrollSent.cshtml" />
     <Content Include="Views\Payroll\PayrollsByEmployee.cshtml" />
     <Content Include="Views\User\UsersList.cshtml" />
+    <Content Include="Views\User\Edit.cshtml" />
+    <Content Include="Views\Payroll\ViewPayroll.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -12,72 +12,27 @@
             <table class="table">
                 <thead class="bg-danger text-white">
                     <tr>
-                        <th scope="col" class="text-center">Quincena</th>
-                        <th scope="col" class="text-center">Enviado</th>
-                        <th></th>
+                        <th scope="col">Quincena</th>
+                        <th scope="col">Mes</th>
+                        <th scope="col">Tipo Nomina</th>
+                        <th>Ver detalle</th>
                     </tr>
                 </thead>
                 <tbody>
+                    @foreach (var item in ViewBag.Payrolls)
+                    {
                     <tr>
-                        <th scope="row" class="text-center">11</th>
-                        <td class="text-center">25/04/2019</td>
-                        <td class="text-center"><a href="#">Ver detalle</a></td>
+                        <td>@item.period</td>
+                        <td>@item.month</td>
+                        <td>@item.description</td>
+
+                        <td align="center">
+                            <a class="btn btn-sm btn-outline-dark" href="@Url.Action("ViewPayroll",new { period = @item.period, paytype = item.paytype })">
+                                <i class="fa fa-search"></i>
+                            </a>
+                        </td>
                     </tr>
-                    <tr>
-                        <th scope="row" class="text-center">11</th>
-                        <td class="text-center">25/04/2019</td>
-                        <td class="text-center">Ver detalle</td>
-                    </tr>
-                    <tr>
-                        <th scope="row" class="text-center">11</th>
-                        <td class="text-center">25/04/2019</td>
-                        <td class="text-center">Ver detalle</td>
-                    </tr>
-                    <tr>
-                        <th scope="row" class="text-center">11</th>
-                        <td class="text-center">25/04/2019</td>
-                        <td class="text-center">Ver detalle</td>
-                    </tr>
-                    <tr>
-                        <th scope="row" class="text-center">11</th>
-                        <td class="text-center">25/04/2019</td>
-                        <td class="text-center">Ver detalle</td>
-                    </tr>
-                    <tr>
-                        <th scope="row" class="text-center">11</th>
-                        <td class="text-center">25/04/2019</td>
-                        <td class="text-center">Ver detalle</td>
-                    </tr>
-                    <tr>
-                        <th scope="row" class="text-center">11</th>
-                        <td class="text-center">25/04/2019</td>
-                        <td class="text-center">Ver detalle</td>
-                    </tr>
-                    <tr>
-                        <th scope="row" class="text-center">11</th>
-                        <td class="text-center">25/04/2019</td>
-                        <td class="text-center">Ver detalle</td>
-                    </tr>
-                    <tr>
-                        <th scope="row" class="text-center">11</th>
-                        <td class="text-center">25/04/2019</td>
-                        <td class="text-center">Ver detalle</td>
-                    </tr>
-                    <tr>
-                        <th scope="row" class="text-center">11</th>
-                        <td class="text-center">25/04/2019</td>
-                        <td class="text-center">Ver detalle</td>
-                    </tr>
-                    <tr>
-                        <th scope="row" class="text-center">11</th>
-                        <td class="text-center">25/04/2019</td>
-                        <td class="text-center">Ver detalle</td>
-                    </tr>
-                    <tr>
-                        <th scope="row" class="text-center">11</th>
-                        <td class="text-center">25/04/2019</td>
-                        <td class="text-center">Ver detalle</td>
-                    </tr>
+                    }
                 </tbody>
             </table>
 

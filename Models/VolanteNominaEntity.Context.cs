@@ -25,7 +25,7 @@ namespace VolanteNominaRC.Models
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<LoginHistory> LoginHistories { get; set; }
         public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<LoginHistory> LoginHistories { get; set; }
     }
 }

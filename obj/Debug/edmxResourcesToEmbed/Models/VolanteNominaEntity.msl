@@ -1,14 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
   <EntityContainerMapping StorageEntityContainer="VolanteNominaModelStoreContainer" CdmEntityContainer="VolanteNominaEntities">
-    <EntitySetMapping Name="LoginHistories">
-      <EntityTypeMapping TypeName="VolanteNominaModel.LoginHistory">
-        <MappingFragment StoreEntitySet="LoginHistory">
-          <ScalarProperty Name="UserID" ColumnName="UserID" />
-          <ScalarProperty Name="LastLogin" ColumnName="LastLogin" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="Users">
       <EntityTypeMapping TypeName="VolanteNominaModel.User">
         <MappingFragment StoreEntitySet="User">
@@ -19,6 +11,15 @@
           <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
           <ScalarProperty Name="EmployeeID" ColumnName="EmployeeID" />
           <ScalarProperty Name="IdHash" ColumnName="IdHash" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="LoginHistories">
+      <EntityTypeMapping TypeName="VolanteNominaModel.LoginHistory">
+        <MappingFragment StoreEntitySet="LoginHistory">
+          <ScalarProperty Name="LastLogin" ColumnName="LastLogin" />
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
           <ScalarProperty Name="Id" ColumnName="Id" />
         </MappingFragment>
       </EntityTypeMapping>

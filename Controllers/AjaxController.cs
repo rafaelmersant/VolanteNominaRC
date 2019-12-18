@@ -4,6 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Web;
 using System.Web.Mvc;
+using System.Data.Odbc;
+using System.Data;
+using System.Configuration;
 
 namespace VolanteNominaRC.Controllers
 {
@@ -27,5 +30,31 @@ namespace VolanteNominaRC.Controllers
             }
             return hash.ToString();
         }
+
+        public static DataSet ExecuteDataSetODBC(string query, OdbcParameter[] parameters = null)
+        {
+            string sConn = ConfigurationManager.AppSettings["sConnSQLODBC"];
+
+            OdbcConnection oconn = new OdbcConnection(sConn);
+            OdbcCommand ocmd = new OdbcCommand(query, oconn);
+            OdbcDataAdapter adapter;
+            DataSet dsData = new DataSet();
+
+            ocmd.CommandType = CommandType.Text;
+
+            if (parameters != null)
+            {
+                ocmd.Parameters.Clear();
+
+                foreach (OdbcParameter param in parameters)
+                    ocmd.Parameters.Add(param);
+            }
+
+            adapter = new OdbcDataAdapter(ocmd);
+            adapter.Fill(dsData);
+
+            return dsData;
+        }
+
     }
 }

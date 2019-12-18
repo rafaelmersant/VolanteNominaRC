@@ -2,14 +2,15 @@
 <Schema Namespace="VolanteNominaModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
   <EntityType Name="LoginHistory">
     <Key>
-      <PropertyRef Name="UserID" />
+      <PropertyRef Name="Id" />
     </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="UserID" Type="int" Nullable="false" />
     <Property Name="LastLogin" Type="datetime" Nullable="false" />
   </EntityType>
   <EntityType Name="User">
     <Key>
-      <PropertyRef Name="EmployeeID" />
+      <PropertyRef Name="IdHash" />
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="IdHash" Type="uniqueidentifier" Nullable="false" />

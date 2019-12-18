@@ -5,8 +5,8 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="8063795682b444fd9d4f739370cc32ff" Name="Diagram1">
-        <EntityTypeShape EntityType="VolanteNominaModel.LoginHistory" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="VolanteNominaModel.User" Width="1.5" PointX="3.375" PointY="0.75" />
+        <EntityTypeShape EntityType="VolanteNominaModel.LoginHistory" Width="1.5" PointX="0.75" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

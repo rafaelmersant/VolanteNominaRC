@@ -14,6 +14,7 @@ namespace VolanteNominaRC.Models
     
     public partial class LoginHistory
     {
+        public int Id { get; set; }
         public int UserID { get; set; }
         public System.DateTime LastLogin { get; set; }
     }
