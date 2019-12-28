@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using VolanteNominaRC.Models;
 
 namespace VolanteNominaRC.Controllers
 {
@@ -74,9 +76,17 @@ namespace VolanteNominaRC.Controllers
                 " CECODEMPLE, CENOMEMPLE, CENOMDEPTO, CENOMCARGO, CECORREOEL FROM [QS36F.RCNOCE00] WHERE CECODEMPLE = " + EmployeeId + 
                 " AND CECICLOPAG = '" + period + "' AND CETIPOPAGO = '" + paytype + "' ORDER BY CEINGDEDUC DESC";
 
+            if (ConfigurationManager.AppSettings["EnvironmentVolante"] == "PROD")
+                sQuery = sQuery.Replace("[", "").Replace("]", "");
+
             DataSet payrollDetail = AjaxController.ExecuteDataSetODBC(sQuery, null);
 
-            ViewBag.PayrollDetail = GetPayrollDetail(payrollDetail);
+            PayrollDetailHeader payroll = GetPayrollDetail(payrollDetail);
+            ViewBag.PayrollDetail = payroll;
+
+            string seenBy = User != null && User.Identity.Name.Length > 0 ? User.Identity.Name : Session["employeeId"].ToString();
+
+            SavePayrollSeenHistory(Session["employeeId"].ToString(), payroll.ceciclopag, seenBy);
             return View();
         }
 
@@ -84,12 +94,22 @@ namespace VolanteNominaRC.Controllers
         {
             if (Session["role"] == null) return RedirectToAction("Login", "User");
 
-            string EmployeeId = Session["employeeId"].ToString();
-            string sQuery = "SELECT DISTINCT CECICLOPAG, CEDESCPAGO, CETIPOPAGO from [QS36F.RCNOCE00] WHERE CECODEMPLE = " + EmployeeId + " ORDER BY 1 DESC";
+            try
+            {
+                string EmployeeId = Session["employeeId"].ToString();
+                string sQuery = "SELECT DISTINCT CECICLOPAG, CEDESCPAGO, CETIPOPAGO from [QS36F.RCNOCE00] WHERE CECODEMPLE = " + EmployeeId + " ORDER BY 1 DESC";
 
-            DataSet payrolls = AjaxController.ExecuteDataSetODBC(sQuery, null);
+                if (ConfigurationManager.AppSettings["EnvironmentVolante"] == "PROD")
+                    sQuery = sQuery.Replace("[", "").Replace("]", "");
 
-            ViewBag.Payrolls = GetPayrolls(payrolls);
+                DataSet payrolls = AjaxController.ExecuteDataSetODBC(sQuery, null);
+
+                ViewBag.Payrolls = GetPayrolls(payrolls);
+            }
+            catch (Exception ex)
+            {
+                ViewBag.Message = ex.Message;
+            }
 
             return View();
         }
@@ -104,10 +124,11 @@ namespace VolanteNominaRC.Controllers
                 foreach(DataRow row in data.Tables[0].Rows)
                 {
                     string period = row.ItemArray[0].ToString();
+                    int fortnight = int.Parse(period.Substring(period.Length - 2, 2));
 
                     payrolls.Add(new Payroll {
                         period = period,
-                        fortnight = period.Substring(period.Length - 2, 2),
+                        fortnight = GetPaymentNo(fortnight), //+ " " + period.Substring(period.Length - 2, 2),
                         year = period.Substring(0, 4),
                         month = GetMonthName(period.Substring(4, 2)),
                         description = row.ItemArray[1].ToString(),
@@ -164,6 +185,30 @@ namespace VolanteNominaRC.Controllers
             return payrollDetail;
         }
 
+        //Save when payroll is seen by someone
+        private void SavePayrollSeenHistory(string employeeId, string payrollCycle, string seenBy)
+        {
+            try
+            {
+                using (var db = new VolanteNominaEntities())
+                {
+                    db.PayrollSeenHistories.Add(new PayrollSeenHistory
+                    {
+                        EmployeeId = employeeId,
+                        PayrollCycle = payrollCycle,
+                        SeenBy = seenBy,
+                        SeenTime = DateTime.Now,
+                        Machine = Environment.MachineName
+                    });
+                    db.SaveChanges();
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+        }
+
         private string GetMonthName(string month)
         {
             string _month = "Desconocido";
@@ -185,6 +230,14 @@ namespace VolanteNominaRC.Controllers
             }
 
             return _month;
+        }
+
+        private string GetPaymentNo(int fortnight)
+        {
+            if (fortnight % 2 == 0)
+                return "2da.";
+
+            return "1ra.";
         }
     }
 }

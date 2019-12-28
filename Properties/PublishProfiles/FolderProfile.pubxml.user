@@ -15,6 +15,18 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="bin/Antlr3.Runtime.pdb">
       <publishTime>09/10/2013 16:29:20</publishTime>
     </File>
+    <File Include="bin/App_global.asax.compiled">
+      <publishTime>12/19/2019 18:27:23</publishTime>
+    </File>
+    <File Include="bin/App_global.asax.dll">
+      <publishTime>12/19/2019 18:27:22</publishTime>
+    </File>
+    <File Include="bin/EntityFramework.dll">
+      <publishTime>06/07/2018 11:03:48</publishTime>
+    </File>
+    <File Include="bin/EntityFramework.SqlServer.dll">
+      <publishTime>06/07/2018 11:03:48</publishTime>
+    </File>
     <File Include="bin/Microsoft.AspNet.TelemetryCorrelation.dll">
       <publishTime>06/28/2017 15:05:26</publishTime>
     </File>
@@ -199,10 +211,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>02/01/2018 12:20:56</publishTime>
     </File>
     <File Include="bin/VolanteNominaRC.dll">
-      <publishTime>12/10/2019 20:18:41</publishTime>
+      <publishTime>12/19/2019 18:27:14</publishTime>
     </File>
     <File Include="bin/VolanteNominaRC.pdb">
-      <publishTime>12/10/2019 20:18:41</publishTime>
+      <publishTime>12/19/2019 18:27:14</publishTime>
     </File>
     <File Include="bin/WebGrease.dll">
       <publishTime>01/23/2014 13:57:34</publishTime>
@@ -243,11 +255,143 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="Content/bootstrap.min.css.map">
       <publishTime>12/05/2019 14:29:13</publishTime>
     </File>
+    <File Include="Content/dataTables.bootstrap4.min.css">
+      <publishTime>12/15/2019 19:47:53</publishTime>
+    </File>
+    <File Include="Content/font-awesome/.bower.json">
+      <publishTime>12/15/2019 16:04:40</publishTime>
+    </File>
+    <File Include="Content/font-awesome/.gitignore">
+      <publishTime>12/15/2019 16:04:40</publishTime>
+    </File>
+    <File Include="Content/font-awesome/.npmignore">
+      <publishTime>12/15/2019 16:04:40</publishTime>
+    </File>
+    <File Include="Content/font-awesome/bower.json">
+      <publishTime>12/15/2019 16:04:40</publishTime>
+    </File>
+    <File Include="Content/font-awesome/css/font-awesome.css">
+      <publishTime>12/15/2019 16:04:40</publishTime>
+    </File>
+    <File Include="Content/font-awesome/css/font-awesome.css.map">
+      <publishTime>12/15/2019 16:04:40</publishTime>
+    </File>
+    <File Include="Content/font-awesome/css/font-awesome.min.css">
+      <publishTime>12/15/2019 16:04:40</publishTime>
+    </File>
+    <File Include="Content/font-awesome/fonts/fontawesome-webfont.eot">
+      <publishTime>12/15/2019 16:04:40</publishTime>
+    </File>
+    <File Include="Content/font-awesome/fonts/fontawesome-webfont.svg">
+      <publishTime>12/15/2019 16:04:40</publishTime>
+    </File>
+    <File Include="Content/font-awesome/fonts/fontawesome-webfont.ttf">
+      <publishTime>12/15/2019 16:04:40</publishTime>
+    </File>
+    <File Include="Content/font-awesome/fonts/fontawesome-webfont.woff">
+      <publishTime>12/15/2019 16:04:40</publishTime>
+    </File>
+    <File Include="Content/font-awesome/fonts/fontawesome-webfont.woff2">
+      <publishTime>12/15/2019 16:04:40</publishTime>
+    </File>
+    <File Include="Content/font-awesome/fonts/FontAwesome.otf">
+      <publishTime>12/15/2019 16:04:40</publishTime>
+    </File>
+    <File Include="Content/font-awesome/HELP-US-OUT.txt">
+      <publishTime>12/15/2019 16:04:40</publishTime>
+    </File>
+    <File Include="Content/font-awesome/less/animated.less">
+      <publishTime>12/15/2019 16:04:40</publishTime>
+    </File>
+    <File Include="Content/font-awesome/less/bordered-pulled.less">
+      <publishTime>12/15/2019 16:04:40</publishTime>
+    </File>
+    <File Include="Content/font-awesome/less/core.less">
+      <publishTime>12/15/2019 16:04:40</publishTime>
+    </File>
+    <File Include="Content/font-awesome/less/fixed-width.less">
+      <publishTime>12/15/2019 16:04:40</publishTime>
+    </File>
+    <File Include="Content/font-awesome/less/font-awesome.less">
+      <publishTime>12/15/2019 16:04:40</publishTime>
+    </File>
+    <File Include="Content/font-awesome/less/icons.less">
+      <publishTime>12/15/2019 16:04:40</publishTime>
+    </File>
+    <File Include="Content/font-awesome/less/larger.less">
+      <publishTime>12/15/2019 16:04:40</publishTime>
+    </File>
+    <File Include="Content/font-awesome/less/list.less">
+      <publishTime>12/15/2019 16:04:40</publishTime>
+    </File>
+    <File Include="Content/font-awesome/less/mixins.less">
+      <publishTime>12/15/2019 16:04:40</publishTime>
+    </File>
+    <File Include="Content/font-awesome/less/path.less">
+      <publishTime>12/15/2019 16:04:40</publishTime>
+    </File>
+    <File Include="Content/font-awesome/less/rotated-flipped.less">
+      <publishTime>12/15/2019 16:04:40</publishTime>
+    </File>
+    <File Include="Content/font-awesome/less/screen-reader.less">
+      <publishTime>12/15/2019 16:04:40</publishTime>
+    </File>
+    <File Include="Content/font-awesome/less/stacked.less">
+      <publishTime>12/15/2019 16:04:40</publishTime>
+    </File>
+    <File Include="Content/font-awesome/less/variables.less">
+      <publishTime>12/15/2019 16:04:40</publishTime>
+    </File>
+    <File Include="Content/font-awesome/scss/font-awesome.scss">
+      <publishTime>12/15/2019 16:04:40</publishTime>
+    </File>
+    <File Include="Content/font-awesome/scss/_animated.scss">
+      <publishTime>12/15/2019 16:04:40</publishTime>
+    </File>
+    <File Include="Content/font-awesome/scss/_bordered-pulled.scss">
+      <publishTime>12/15/2019 16:04:40</publishTime>
+    </File>
+    <File Include="Content/font-awesome/scss/_core.scss">
+      <publishTime>12/15/2019 16:04:40</publishTime>
+    </File>
+    <File Include="Content/font-awesome/scss/_fixed-width.scss">
+      <publishTime>12/15/2019 16:04:40</publishTime>
+    </File>
+    <File Include="Content/font-awesome/scss/_icons.scss">
+      <publishTime>12/15/2019 16:04:40</publishTime>
+    </File>
+    <File Include="Content/font-awesome/scss/_larger.scss">
+      <publishTime>12/15/2019 16:04:40</publishTime>
+    </File>
+    <File Include="Content/font-awesome/scss/_list.scss">
+      <publishTime>12/15/2019 16:04:40</publishTime>
+    </File>
+    <File Include="Content/font-awesome/scss/_mixins.scss">
+      <publishTime>12/15/2019 16:04:40</publishTime>
+    </File>
+    <File Include="Content/font-awesome/scss/_path.scss">
+      <publishTime>12/15/2019 16:04:40</publishTime>
+    </File>
+    <File Include="Content/font-awesome/scss/_rotated-flipped.scss">
+      <publishTime>12/15/2019 16:04:40</publishTime>
+    </File>
+    <File Include="Content/font-awesome/scss/_screen-reader.scss">
+      <publishTime>12/15/2019 16:04:40</publishTime>
+    </File>
+    <File Include="Content/font-awesome/scss/_stacked.scss">
+      <publishTime>12/15/2019 16:04:40</publishTime>
+    </File>
+    <File Include="Content/font-awesome/scss/_variables.scss">
+      <publishTime>12/15/2019 16:04:40</publishTime>
+    </File>
     <File Include="Content/images/RCLogo.PNG">
       <publishTime>12/05/2019 13:57:42</publishTime>
     </File>
+    <File Include="Content/jquery/dist/jquery.min.js">
+      <publishTime>12/10/2019 22:25:31</publishTime>
+    </File>
     <File Include="Content/Site.css">
-      <publishTime>12/07/2019 23:07:54</publishTime>
+      <publishTime>12/15/2019 20:02:05</publishTime>
     </File>
     <File Include="favicon.ico">
       <publishTime>12/05/2019 12:18:52</publishTime>
@@ -255,11 +399,20 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="Global.asax">
       <publishTime>12/05/2019 12:18:52</publishTime>
     </File>
+    <File Include="Models/VolanteNominaEntity.edmx.diagram">
+      <publishTime>12/18/2019 00:50:43</publishTime>
+    </File>
+    <File Include="PrecompiledApp.config">
+      <publishTime>12/19/2019 18:27:15</publishTime>
+    </File>
     <File Include="Scripts/bootstrap.js">
       <publishTime>12/05/2019 14:29:13</publishTime>
     </File>
     <File Include="Scripts/bootstrap.min.js">
       <publishTime>12/05/2019 14:29:04</publishTime>
+    </File>
+    <File Include="Scripts/dataTables.bootstrap4.min.js">
+      <publishTime>12/15/2019 19:51:36</publishTime>
     </File>
     <File Include="Scripts/esm/popper-utils.js">
       <publishTime>12/05/2019 14:28:52</publishTime>
@@ -305,6 +458,9 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     </File>
     <File Include="Scripts/jquery-3.3.1.slim.min.map">
       <publishTime>12/05/2019 12:18:57</publishTime>
+    </File>
+    <File Include="Scripts/jquery.dataTables.min.js">
+      <publishTime>12/15/2019 19:52:42</publishTime>
     </File>
     <File Include="Scripts/jquery.validate.js">
       <publishTime>12/05/2019 12:19:03</publishTime>
@@ -577,28 +733,37 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>12/08/2019 15:45:08</publishTime>
     </File>
     <File Include="Views/Payroll/PayrollsByEmployee.cshtml">
-      <publishTime>12/10/2019 20:18:17</publishTime>
+      <publishTime>12/19/2019 18:27:05</publishTime>
     </File>
     <File Include="Views/Payroll/SendPayroll.cshtml">
-      <publishTime>12/08/2019 22:30:45</publishTime>
+      <publishTime>12/10/2019 22:07:17</publishTime>
+    </File>
+    <File Include="Views/Payroll/ViewPayroll.cshtml">
+      <publishTime>12/18/2019 01:02:10</publishTime>
     </File>
     <File Include="Views/Shared/Error.cshtml">
       <publishTime>12/05/2019 12:18:52</publishTime>
     </File>
     <File Include="Views/Shared/_Layout.cshtml">
-      <publishTime>12/08/2019 16:09:20</publishTime>
+      <publishTime>12/15/2019 23:42:02</publishTime>
+    </File>
+    <File Include="Views/User/Edit.cshtml">
+      <publishTime>12/15/2019 22:27:34</publishTime>
     </File>
     <File Include="Views/User/ExceptionForEmployees.cshtml">
       <publishTime>12/08/2019 15:44:36</publishTime>
     </File>
     <File Include="Views/User/Login.cshtml">
-      <publishTime>12/08/2019 20:50:29</publishTime>
+      <publishTime>12/16/2019 00:20:37</publishTime>
     </File>
     <File Include="Views/User/RecoverPassword.cshtml">
-      <publishTime>12/08/2019 22:26:36</publishTime>
+      <publishTime>12/15/2019 23:49:43</publishTime>
     </File>
     <File Include="Views/User/RegisterUser.cshtml">
-      <publishTime>12/08/2019 22:30:14</publishTime>
+      <publishTime>12/15/2019 12:16:41</publishTime>
+    </File>
+    <File Include="Views/User/UsersList.cshtml">
+      <publishTime>12/16/2019 10:54:38</publishTime>
     </File>
     <File Include="Views/Web.config">
       <publishTime>12/05/2019 12:18:52</publishTime>
@@ -607,7 +772,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>12/05/2019 12:18:52</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>12/10/2019 20:18:42</publishTime>
+      <publishTime>12/19/2019 18:14:48</publishTime>
     </File>
   </ItemGroup>
 </Project>

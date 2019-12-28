@@ -8,6 +8,27 @@
     <Property Name="UserID" Type="int" Nullable="false" />
     <Property Name="LastLogin" Type="datetime" Nullable="false" />
   </EntityType>
+  <EntityType Name="PayrollSeenHistory">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="EmployeeId" Type="char" MaxLength="4" Nullable="false" />
+    <Property Name="PayrollCycle" Type="nchar" MaxLength="10" Nullable="false" />
+    <Property Name="SeenTime" Type="datetime" Nullable="false" />
+    <Property Name="SeenBy" Type="char" MaxLength="4" Nullable="false" />
+    <Property Name="Machine" Type="varchar" MaxLength="30" />
+  </EntityType>
+  <EntityType Name="PayrollSentHistory">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="EmployeeId" Type="char" MaxLength="4" Nullable="false" />
+    <Property Name="PayrollCycle" Type="char" MaxLength="8" Nullable="false" />
+    <Property Name="Sent" Type="datetime" Nullable="false" />
+    <Property Name="SentBy" Type="char" MaxLength="4" Nullable="false" />
+  </EntityType>
   <EntityType Name="User">
     <Key>
       <PropertyRef Name="IdHash" />
@@ -23,6 +44,8 @@
   </EntityType>
   <EntityContainer Name="VolanteNominaModelStoreContainer">
     <EntitySet Name="LoginHistory" EntityType="Self.LoginHistory" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PayrollSeenHistory" EntityType="Self.PayrollSeenHistory" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PayrollSentHistory" EntityType="Self.PayrollSentHistory" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
   </EntityContainer>
 </Schema>

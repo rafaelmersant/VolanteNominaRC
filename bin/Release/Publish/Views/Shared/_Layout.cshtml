@@ -6,13 +6,15 @@
     <title>@ViewBag.Title - RadioCentro</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+    @Styles.Render("~/content/font-awesome/css/font-awesome.min.css")
+
 </head>
 <body>
 
     <nav class="navbar navbar-expand-lg navbar-light mb-5 border-bottom shadow-sm">
         <div class="container-fluid">
             <div class="navbar-header">
-                <img src="~/Content/images/RCLogo.PNG" alt="RC" class="navbar-brand" width="229" />
+                <img src="~/Content/images/RCLogo.PNG" alt="RC" class="navbar-brand" width="229" style="margin-top: -8px" />
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -21,18 +23,40 @@
             <div class="collapse navbar-collapse" id="navbarNav">
 
                 <ul class="navbar-nav">
-                    <li class="nav-item"><a href="/payroll/SendPayroll" class="nav-link">Envio de Volantes</a></li>
-                    <li class="nav-item"><a href="/payroll/PayrollsByEmployee" class="nav-link">Consulta Volante</a></li>
-                    <li class="nav-item"><a href="/user/RegisterUser" class="nav-link">Nuevo Usuario</a></li>
+                    @if (Session["role"] != null && Session["role"].ToString() == "Admin")
+                    {
+                        <li class="nav-item"><a href="/payroll/SendPayroll" class="nav-link">Envio de Volantes</a></li>
+                        <li class="nav-item"><a href="/payroll/PayrollsByEmployee" class="nav-link">Consulta Volante</a></li>
+                        <li class="nav-item"><a href="/user/UsersList" class="nav-link">Usuarios</a></li>
+                    }
+                    else
+                    {
+                        <li class="nav-item"><a href="/payroll/PayrollsByEmployee" class="nav-link">Consulta Volante</a></li>
+                    }
+
                 </ul>
 
                 <ul class="nav navbar-nav" style="position: absolute; right:10px">
                     @*<li class="nav-item">@Html.ActionLink("Usuarios", "Users", "User", new { @class = "nav-link" }) </li>*@
-                    <li class="nav-item"><a href="/user/login" class="nav-link">Iniciar Sesión</a>  </li>
+
+                    @if (Session["role"] != null)
+                    {
+                        <li class="nav-item"><a href="/user/logout" class="nav-link">Cerrar Sesión</a></li>
+                        <li class="nav-item"><a href="javascript:void(0)" class="nav-link"><span class="mr-2">|</span> @Session["email"]</a>  </li>
+                    }
+                    else
+                    {
+                        <li class="nav-item"><a href="/user/login" class="nav-link"></a>Iniciar Sesión</li>
+                    }
+
                 </ul>
             </div>
         </div>
     </nav>
+
+    @Scripts.Render("~/content/jquery/dist/jquery.min.js")
+    @*@Scripts.Render("~/Scripts/fontawesome/fontawesome.min.js")*@
+
 
     <div class="container body-content">
         @RenderBody()
@@ -41,6 +65,7 @@
             @*<p>&copy; @DateTime.Now.Year - RadioCentro</p>*@
         </footer>
     </div>
+
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")

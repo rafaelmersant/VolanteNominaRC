@@ -13,6 +13,27 @@
           <Property Name="UserID" Type="int" Nullable="false" />
           <Property Name="LastLogin" Type="datetime" Nullable="false" />
         </EntityType>
+        <EntityType Name="PayrollSeenHistory">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EmployeeId" Type="char" MaxLength="4" Nullable="false" />
+          <Property Name="PayrollCycle" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="SeenTime" Type="datetime" Nullable="false" />
+          <Property Name="SeenBy" Type="char" MaxLength="4" Nullable="false" />
+          <Property Name="Machine" Type="varchar" MaxLength="30" />
+        </EntityType>
+        <EntityType Name="PayrollSentHistory">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EmployeeId" Type="char" MaxLength="4" Nullable="false" />
+          <Property Name="PayrollCycle" Type="char" MaxLength="8" Nullable="false" />
+          <Property Name="Sent" Type="datetime" Nullable="false" />
+          <Property Name="SentBy" Type="char" MaxLength="4" Nullable="false" />
+        </EntityType>
         <EntityType Name="User">
           <Key>
             <PropertyRef Name="IdHash" />
@@ -28,6 +49,8 @@
         </EntityType>
         <EntityContainer Name="VolanteNominaModelStoreContainer">
           <EntitySet Name="LoginHistory" EntityType="Self.LoginHistory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PayrollSeenHistory" EntityType="Self.PayrollSeenHistory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PayrollSentHistory" EntityType="Self.PayrollSentHistory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -37,6 +60,8 @@
         <EntityContainer Name="VolanteNominaEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Users" EntityType="VolanteNominaModel.User" />
           <EntitySet Name="LoginHistories" EntityType="VolanteNominaModel.LoginHistory" />
+          <EntitySet Name="PayrollSeenHistories" EntityType="VolanteNominaModel.PayrollSeenHistory" />
+          <EntitySet Name="PayrollSentHistories" EntityType="VolanteNominaModel.PayrollSentHistory" />
         </EntityContainer>
         <EntityType Name="User">
           <Key>
@@ -58,6 +83,27 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="UserID" Type="Int32" Nullable="false" />
           <Property Name="LastLogin" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="PayrollSeenHistory">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EmployeeId" Type="String" Nullable="false" MaxLength="4" FixedLength="true" Unicode="false" />
+          <Property Name="PayrollCycle" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="SeenTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="SeenBy" Type="String" Nullable="false" MaxLength="4" FixedLength="true" Unicode="false" />
+          <Property Name="Machine" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="PayrollSentHistory">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EmployeeId" Type="String" Nullable="false" MaxLength="4" FixedLength="true" Unicode="false" />
+          <Property Name="PayrollCycle" Type="String" Nullable="false" MaxLength="8" FixedLength="true" Unicode="false" />
+          <Property Name="Sent" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="SentBy" Type="String" Nullable="false" MaxLength="4" FixedLength="true" Unicode="false" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -84,6 +130,29 @@
               <MappingFragment StoreEntitySet="LoginHistory">
                 <ScalarProperty Name="LastLogin" ColumnName="LastLogin" />
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PayrollSeenHistories">
+            <EntityTypeMapping TypeName="VolanteNominaModel.PayrollSeenHistory">
+              <MappingFragment StoreEntitySet="PayrollSeenHistory">
+                <ScalarProperty Name="Machine" ColumnName="Machine" />
+                <ScalarProperty Name="SeenBy" ColumnName="SeenBy" />
+                <ScalarProperty Name="SeenTime" ColumnName="SeenTime" />
+                <ScalarProperty Name="PayrollCycle" ColumnName="PayrollCycle" />
+                <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PayrollSentHistories">
+            <EntityTypeMapping TypeName="VolanteNominaModel.PayrollSentHistory">
+              <MappingFragment StoreEntitySet="PayrollSentHistory">
+                <ScalarProperty Name="SentBy" ColumnName="SentBy" />
+                <ScalarProperty Name="Sent" ColumnName="Sent" />
+                <ScalarProperty Name="PayrollCycle" ColumnName="PayrollCycle" />
+                <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

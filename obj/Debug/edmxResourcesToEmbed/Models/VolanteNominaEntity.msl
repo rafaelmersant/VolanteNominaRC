@@ -24,5 +24,28 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="PayrollSeenHistories">
+      <EntityTypeMapping TypeName="VolanteNominaModel.PayrollSeenHistory">
+        <MappingFragment StoreEntitySet="PayrollSeenHistory">
+          <ScalarProperty Name="Machine" ColumnName="Machine" />
+          <ScalarProperty Name="SeenBy" ColumnName="SeenBy" />
+          <ScalarProperty Name="SeenTime" ColumnName="SeenTime" />
+          <ScalarProperty Name="PayrollCycle" ColumnName="PayrollCycle" />
+          <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PayrollSentHistories">
+      <EntityTypeMapping TypeName="VolanteNominaModel.PayrollSentHistory">
+        <MappingFragment StoreEntitySet="PayrollSentHistory">
+          <ScalarProperty Name="SentBy" ColumnName="SentBy" />
+          <ScalarProperty Name="Sent" ColumnName="Sent" />
+          <ScalarProperty Name="PayrollCycle" ColumnName="PayrollCycle" />
+          <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>

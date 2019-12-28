@@ -3,6 +3,8 @@
   <EntityContainer Name="VolanteNominaEntities" annotation:LazyLoadingEnabled="true">
     <EntitySet Name="Users" EntityType="VolanteNominaModel.User" />
     <EntitySet Name="LoginHistories" EntityType="VolanteNominaModel.LoginHistory" />
+    <EntitySet Name="PayrollSeenHistories" EntityType="VolanteNominaModel.PayrollSeenHistory" />
+    <EntitySet Name="PayrollSentHistories" EntityType="VolanteNominaModel.PayrollSentHistory" />
   </EntityContainer>
   <EntityType Name="User">
     <Key>
@@ -24,5 +26,26 @@
     <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="UserID" Type="Int32" Nullable="false" />
     <Property Name="LastLogin" Type="DateTime" Nullable="false" Precision="3" />
+  </EntityType>
+  <EntityType Name="PayrollSeenHistory">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="EmployeeId" Type="String" Nullable="false" MaxLength="4" FixedLength="true" Unicode="false" />
+    <Property Name="PayrollCycle" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="SeenTime" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="SeenBy" Type="String" Nullable="false" MaxLength="4" FixedLength="true" Unicode="false" />
+    <Property Name="Machine" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="PayrollSentHistory">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="EmployeeId" Type="String" Nullable="false" MaxLength="4" FixedLength="true" Unicode="false" />
+    <Property Name="PayrollCycle" Type="String" Nullable="false" MaxLength="8" FixedLength="true" Unicode="false" />
+    <Property Name="Sent" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="SentBy" Type="String" Nullable="false" MaxLength="4" FixedLength="true" Unicode="false" />
   </EntityType>
 </Schema>

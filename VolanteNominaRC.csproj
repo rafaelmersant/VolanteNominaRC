@@ -159,6 +159,12 @@
     <Compile Include="Models\LoginHistory.cs">
       <DependentUpon>VolanteNominaEntity.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\PayrollSeenHistory.cs">
+      <DependentUpon>VolanteNominaEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PayrollSentHistory.cs">
+      <DependentUpon>VolanteNominaEntity.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\User.cs">
       <DependentUpon>VolanteNominaEntity.tt</DependentUpon>
     </Compile>

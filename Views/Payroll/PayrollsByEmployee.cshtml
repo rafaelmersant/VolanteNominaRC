@@ -8,22 +8,24 @@
 
     <div class="row">
         
-        <div class="col-6 center-block">
+        <div class="col-9 center-block">
             <table class="table">
                 <thead class="bg-danger text-white">
                     <tr>
-                        <th scope="col">Quincena</th>
+                        <th scope="col">Año</th>
                         <th scope="col">Mes</th>
+                        <th scope="col">Quincena</th>
                         <th scope="col">Tipo Nomina</th>
-                        <th>Ver detalle</th>
+                        <th class="text-center">Ver detalle</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach (var item in ViewBag.Payrolls)
                     {
                     <tr>
-                        <td>@item.period</td>
+                        <td>@item.year</td>
                         <td>@item.month</td>
+                        <td>@item.fortnight</td>
                         <td>@item.description</td>
 
                         <td align="center">
@@ -35,8 +37,9 @@
                     }
                 </tbody>
             </table>
-
         </div>
     </div>
 </div>
+
+<span class="d-block bg-light text-danger pl-2 pr-2 pb-1 pt-1 mt-3 mb-0 text-center">@ViewBag.Message</span>
 

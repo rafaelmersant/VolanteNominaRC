@@ -10,7 +10,7 @@
         <div class="col-5 pb-3 pt-3 bg-light">
             <form>
                 <div class="form-row">
-                    <div class="col-2 mb-3">
+                    <div class="col-3 mb-3">
                         <label for="validationDefault01">Año</label>
                         <select class="custom-select" required>
                             <option value="2019">2019</option>
@@ -42,21 +42,37 @@
                         </select>
                     </div>
                 </div>
-                <div class="custom-control custom-radio mt-3">
-                    <input type="radio" class="custom-control-input" id="sendToAll" name="radio-stacked" required>
-                    <label class="custom-control-label" for="customControlValidation2">Enviar a todos</label>
-                </div>
-                <div class="custom-control custom-radio mb-5 mt-3">
-                    <input type="radio" class="custom-control-input" id="customControlValidation3" name="radio-stacked" required>
-                    <label class="custom-control-label" for="customControlValidation3">Enviar a un empleado</label>
-                    <input type="text" class="form-control d-inline" id="idEmployeeId" placeholder="Cod. Empleado" style="margin-top: -12px; width: 160px">
-                </div>
 
-                <button class="btn btn-danger w-25" type="submit">
-                    Enviar
+                <fieldset id="radioSend">
+                    <div class="custom-control custom-radio mt-3">
+                        <label><input type="radio" name="radioSend" checked> <span class="ml-2">Enviar a todos</span></label>
+                    </div>
+
+                    <div class="custom-control custom-radio mt-2">
+                        <label> <input type="radio" name="radioSend"><span class="ml-2">Enviar a un empleado</span></label>
+                        <input type="text" class="form-control d-inline" id="idEmployeeId" placeholder="Cod. Empleado" style="margin-top: -12px; width: 160px">
+                    </div>
+
+                    <div class="row custom-radio ml-4 mb-5 mt-2">
+                        <div>
+                            <label><input type="radio" name="radioSend"><span class="ml-2">Enviar a una dirección</span></label>
+                        </div>
+                        <div class="ml-1">
+                            <select class="form-control" id="selDirectorate">
+                                <option>Finanzas</option>
+                                <option>Recursos Humanos</option>
+                                <option>Operaciones</option>
+                                <option>Calidad</option>
+                            </select>
+                        </div>
+                    </div>
+                </fieldset>
+
+                <button class="btn btn-danger w-100 pt-3 pb-2" id="btnSend">
+                    <h4>Enviar</h4>
                 </button>
 
-                <span class="d-block bg-light text-info pl-2 pr-2 pb-1 pt-1 mt-3">Los volantes han sido enviados</span>
+                <span class="d-block bg-light text-info pl-2 pr-2 pb-1 pt-1 mt-4">Los volantes han sido enviados</span>
             </form>
         </div>
 
@@ -65,7 +81,7 @@
                 <thead class="bg-danger text-white">
                     <tr>
                         <th scope="col" class="text-center">Volantes Enviados</th>
-                        <th scope="col" class="text-center">Fecha</th>                        
+                        <th scope="col" class="text-center">Fecha</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -124,4 +140,38 @@
     </div>
 </div>
 
+
+@section scripts {
+    <script src="~/Scripts/jquery.dataTables.min.js"></script>
+    <script src="~/Scripts/dataTables.bootstrap4.min.js"></script>
+
+}
+<script type="text/javascript">
+
+    //const deleteUser = (codigo, id) => {
+    //    if (confirm(`Seguro que desea eliminar al Empleado de código ${codigo} ?`)) {
+    //        $.ajax({
+    //            "url": "/User/Delete?id=" + id,
+    //            "type": "POST",
+    //            "success": function (response) {
+    //                if (response.result === "200") {
+    //                    window.location.reload();
+    //                } else {
+    //                    console.log(response.message);
+    //                    alert('Hubo un error tratando de eliminar el usuario (Contacte al administrador del sistema).');
+    //                }
+    //            }
+    //        });
+    //    }
+    //}
+
+    $(document).ready(function () {
+        $("#btnSend").on('click', function (e) {
+            e.preventDefault();
+
+            console.log("clicked SEND");
+        });
+    });
+
+</script>
 
