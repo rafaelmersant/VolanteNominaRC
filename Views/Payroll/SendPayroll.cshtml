@@ -12,23 +12,23 @@
                 <div class="form-row">
                     <div class="col-3 mb-3">
                         <label for="validationDefault01">Año</label>
-                        <select class="custom-select" required>
+                        <select class="custom-select" id="yearSelected" required>
                             <option value="2019">2019</option>
                             <option value="2020">2020</option>
                         </select>
                     </div>
                     <div class="col-4 mb-3">
                         <label for="validationDefault01">Mes</label>
-                        <select class="custom-select" required>
-                            <option value="1">Enero</option>
-                            <option value="2">Febrero</option>
-                            <option value="3">Marzo</option>
-                            <option value="4">Abril</option>
-                            <option value="5">Mayo</option>
-                            <option value="6">Junio</option>
-                            <option value="7">Julio</option>
-                            <option value="8">Agosto</option>
-                            <option value="9">Septiembre</option>
+                        <select class="custom-select" id="monthSelected" required>
+                            <option value="01">Enero</option>
+                            <option value="02">Febrero</option>
+                            <option value="03">Marzo</option>
+                            <option value="04">Abril</option>
+                            <option value="05">Mayo</option>
+                            <option value="06">Junio</option>
+                            <option value="07">Julio</option>
+                            <option value="08">Agosto</option>
+                            <option value="09">Septiembre</option>
                             <option value="10">Octubre</option>
                             <option value="11">Noviembre</option>
                             <option value="12">Diciembre</option>
@@ -36,7 +36,7 @@
                     </div>
                     <div class="col-2 mb-3">
                         <label for="validationDefault01">Quincena</label>
-                        <select class="custom-select" required>
+                        <select class="custom-select" id="fortnightSelected" required>
                             <option value="1">1</option>
                             <option value="2">2</option>
                         </select>
@@ -45,20 +45,20 @@
 
                 <fieldset id="radioSend">
                     <div class="custom-control custom-radio mt-3">
-                        <label><input type="radio" name="radioSend" checked> <span class="ml-2">Enviar a todos</span></label>
+                        <label><input type="radio" name="radioSend" value="all" checked> <span class="ml-2">Enviar a todos</span></label>
                     </div>
 
                     <div class="custom-control custom-radio mt-2">
-                        <label> <input type="radio" name="radioSend"><span class="ml-2">Enviar a un empleado</span></label>
+                        <label> <input type="radio" name="radioSend" value="oneEmployee"><span class="ml-2">Enviar a un empleado</span></label>
                         <input type="text" class="form-control d-inline" id="idEmployeeId" placeholder="Cod. Empleado" style="margin-top: -12px; width: 160px">
                     </div>
 
                     <div class="row custom-radio ml-4 mb-5 mt-2">
                         <div>
-                            <label><input type="radio" name="radioSend"><span class="ml-2">Enviar a una dirección</span></label>
+                            <label><input type="radio" name="radioSend" value="oneDirectorate"><span class="ml-2">Enviar a una dirección</span></label>
                         </div>
                         <div class="ml-1">
-                            <select class="form-control" id="selDirectorate">
+                            <select class="form-control" id="directorateSelected">
                                 <option>Finanzas</option>
                                 <option>Recursos Humanos</option>
                                 <option>Operaciones</option>
@@ -170,7 +170,26 @@
             e.preventDefault();
 
             console.log("clicked SEND");
+        })
+
+        $("input[type=radio]").click(function () {
+            console.log($(this).val())
         });
+
+        $("#yearSelected").on('change', function (e) {
+            var yearSelected = $('#yearSelected option:selected').val()
+            console.log(yearSelected)
+        })
+
+        $("#monthSelected").on('change', function (e) {
+            var yearSelected = $('#monthSelected option:selected').val()
+            console.log(yearSelected)
+        })
+
+        $("#fortnightSelected").on('change', function (e) {
+            var yearSelected = $('#fortnightSelected option:selected').val()
+            console.log(yearSelected)
+        })
     });
 
 </script>

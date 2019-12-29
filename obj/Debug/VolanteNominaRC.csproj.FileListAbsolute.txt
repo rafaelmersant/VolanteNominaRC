@@ -83,7 +83,6 @@ C:\Users\rafae\source\repos\VolanteNominaRC\VolanteNominaRC\bin\System.Web.Http.
 C:\Users\rafae\source\repos\VolanteNominaRC\VolanteNominaRC\bin\System.Diagnostics.DiagnosticSource.xml
 C:\Users\rafae\source\repos\VolanteNominaRC\VolanteNominaRC\bin\Microsoft.AspNet.TelemetryCorrelation.xml
 C:\Users\rafae\source\repos\VolanteNominaRC\VolanteNominaRC\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
-C:\Users\rafae\source\repos\VolanteNominaRC\VolanteNominaRC\obj\Debug\VolanteNominaRC.csprojAssemblyReference.cache
 C:\Users\rafae\source\repos\VolanteNominaRC\VolanteNominaRC\obj\Debug\VolanteNominaRC.csproj.CoreCompileInputs.cache
 C:\Users\rafae\source\repos\VolanteNominaRC\VolanteNominaRC\obj\Debug\VolanteNominaRC.csproj.CopyComplete
 C:\Users\rafae\source\repos\VolanteNominaRC\VolanteNominaRC\obj\Debug\VolanteNominaRC.dll
