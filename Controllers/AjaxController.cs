@@ -7,6 +7,8 @@ using System.Web.Mvc;
 using System.Data.Odbc;
 using System.Data;
 using System.Configuration;
+using System.Net.Mail;
+using System.Net;
 
 namespace VolanteNominaRC.Controllers
 {
@@ -57,47 +59,111 @@ namespace VolanteNominaRC.Controllers
         private string GetCycleFor(int month, int cycle)
         {
             if (cycle == 1)
-                return ((month * 2) - 1).ToString();
+                return ((month * 2) - 1).ToString().PadLeft(2, '0');
 
-            return (month * cycle).ToString();
+            return (month * cycle).ToString().PadLeft(2, '0');
         }
 
-        public string GetPayrollTemplate(string by, string entityId, string month, string year, string cycle)
+        [HttpPost]
+        public string SendPayrollTemplate(string by, string entityId, string month, string year, string cycle)
         {
-            string payrollTemplate = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Templates/");
-            payrollTemplate = System.IO.Path.Combine(payrollTemplate, "payrollDetail.html");
-            string content = System.IO.File.ReadAllText(payrollTemplate);
+            bool sent = false;
+            string content = string.Empty;
 
-            string _cycle = year + month + GetCycleFor(int.Parse(month), int.Parse(cycle));
-
-            DataSet employees = GetEmployeesPayroll(by, entityId, _cycle);
-            
-            foreach(DataRow row in employees.Tables[0].Rows)
+            try
             {
-                string employeeId_ = row.ItemArray[0].ToString();
-                string cycle_ = row.ItemArray[1].ToString();
-                string paytype_ = row.ItemArray[2].ToString();
+                ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11;
 
-                DataSet payroll = GetPayrollDetailForEmployee(employeeId_, cycle_, paytype_);
+                string payrollTemplate = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Templates/");
+                payrollTemplate = System.IO.Path.Combine(payrollTemplate, "payrollDetail.html");
+                string messageBody = System.IO.File.ReadAllText(payrollTemplate);
 
-                PayrollDetailHeader payrollDetail = GetPayrollDetail(payroll);
+                string _cycle = year + month + GetCycleFor(int.Parse(month), int.Parse(cycle));
 
-                content = content.Replace("##cenomdepto##", payrollDetail.cenomdepto);
-                content = content.Replace("##ceciclopag##", payrollDetail.ceciclopag);
+                DataSet employees = GetEmployeesPayroll(by, entityId, _cycle);
 
-                string body = string.Empty;
-
-                foreach(var item in payrollDetail.detail)
+                foreach (DataRow row in employees.Tables[0].Rows)
                 {
-                  body += "<tr> <td style = 'width: 60%'>" + item.ceingdeduc + "-" +  item.cetipotrans + " " + item.cedesctran + "</td>" +
-                          "<td style = 'width: 20%; text-align: right'>" +
-                          item.ceingdeduc == "I" ? "<span>" + @String.Format("{0:#,##0.00}", item.cevaltrans) + "</span> </td>" : "<td style = 'width: 20%; text-align: right'>" +
-                          "<span>" + @String.Format("{0:#,##0.00}", item.cevaltrans) + "</span> </td>" +
-                          "</tr>";            
+                    content = messageBody;
+
+                    string employeeId_ = row.ItemArray[0].ToString();
+                    string paytype_ = row.ItemArray[1].ToString();
+                    string cycle_ = row.ItemArray[2].ToString();
+
+                    DataSet payroll = GetPayrollDetailForEmployee(employeeId_, cycle_, paytype_);
+
+                    PayrollDetailHeader payrollDetail = GetPayrollDetail(payroll);
+
+                    content = content.Replace("##cedescpago##", payrollDetail.cedescpago);
+                    content = content.Replace("##ceciclopag##", payrollDetail.ceciclopag);
+                    content = content.Replace("##cenomemple##", payrollDetail.cenomemple);
+                    content = content.Replace("##cecodemple##", payrollDetail.cecodemple);
+                    content = content.Replace("##cenomcargo##", payrollDetail.cenomcargo);
+
+                    string body = string.Empty;
+                    string concept = string.Empty;
+                    string rowColorGray = "#e0e0e0";
+                    string rowColorWhite = "#ffffff";
+                    string rowColor = rowColorWhite;
+                    int index = 1;
+
+                    foreach (var item in payrollDetail.detail)
+                    {
+                        if (index % 2 == 0)
+                            rowColor = rowColorGray;
+                        else
+                            rowColor = rowColorWhite;
+                           
+                        concept = item.ceingdeduc == "I" ?
+                            "<span>" + String.Format("{0:#,##0.00}", item.cevaltrans) + "</span> </td> <td style='width: 20%;'></td>" :
+                            "<td style = 'width: 20%; text-align: right'>"+
+                                "<span>" + String.Format("{0:#,##0.00}", item.cevaltrans) + "</span> </td>";
+
+                        body += "<tr style='background-color: " + rowColor +"'> <td style='width: 60%'>" + item.ceingdeduc + "-" + item.cetipotrans + " " + item.cedesctran + "</td>" +
+                                "<td style='width: 20%; text-align: right'>" + concept + "</tr>";
+
+                        index += 1;
+                    }
+
+                    content = content.Replace("##payrollBody##", body);
+
+                    content = content.Replace("##incomeTotal##", String.Format("{0:#,##0.00}", payrollDetail.incomeTotal));
+                    content = content.Replace("##discountTotal##", String.Format("{0:#,##0.00}", payrollDetail.discountTotal));
+                    content = content.Replace("##total##", String.Format("{0:#,##0.00}", payrollDetail.total));
+
+                    SmtpClient smtp = new SmtpClient
+                    {
+                        Host = ConfigurationManager.AppSettings["smtpClient"],
+                        Port = int.Parse(ConfigurationManager.AppSettings["PortMail"]),
+                        UseDefaultCredentials = false,
+                        DeliveryMethod = SmtpDeliveryMethod.Network,
+                        Credentials = new NetworkCredential(ConfigurationManager.AppSettings["usrEmail"], ConfigurationManager.AppSettings["pwdEmail"]),
+                        EnableSsl = true,
+                    };
+
+                    MailMessage message = new MailMessage();
+                    message.IsBodyHtml = true;
+                    message.Body = content;
+                    message.Subject = "VOLANTE NOMINA " + payrollDetail.cedescpago + " " + _cycle;
+                    message.To.Add(new MailAddress("rafaelmersant@sagaracorp.com")); //payrollDetail.cecorreoel
+
+                    string address = ConfigurationManager.AppSettings["EMail"];
+                    string displayName = ConfigurationManager.AppSettings["EMailName"];
+                    message.From = new MailAddress(address, displayName);
+
+                    smtp.Send(message);
+                    sent = true;
                 }
             }
-            
-            return content;
+            catch (Exception ex)
+            {
+                return ex.Message;
+            }
+
+            if (sent)
+                return "200";
+            else
+                return "No fue enviado ningun volante, favor verificar que la información más arriba es correcta.";
         }
 
         public static DataSet GetPayrollsBy(string employeeId)
@@ -122,7 +188,7 @@ namespace VolanteNominaRC.Controllers
             else if (by == "directorate")
             {
                 sQuery = "SELECT DISTINCT CECODEMPLE, CETIPOPAGO, CECICLOPAG " +
-                " FROM [QS36F.RCNOCE00] WHERE CENOMDEPTO = " + entityId +
+                " FROM [QS36F.RCNOCE00] WHERE CENOMDEPTO = '" + entityId + "' " +
                 " AND CECICLOPAG = '" + cycle + "'";
             }
             else

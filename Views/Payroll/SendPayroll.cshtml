@@ -3,9 +3,18 @@
     ViewBag.Title = "Enviar Volantes";
 }
 
+<style>
+    .error-payroll {
+        color: red !important;
+    }
+
+</style>
+
 <div class="container col-12 shadow p-3 mb-5 bg-white rounded">
     <h3 class="bg-secondary text-light pl-2 pr-2">Enviar Volantes</h3>
 
+    <input type="hidden" name="by" id="by" value="all" />
+    
     <div class="row">
         <div class="col-5 pb-3 pt-3 bg-light">
             <form>
@@ -50,7 +59,7 @@
 
                     <div class="custom-control custom-radio mt-2">
                         <label> <input type="radio" name="radioSend" value="oneEmployee"><span class="ml-2">Enviar a un empleado</span></label>
-                        <input type="text" class="form-control d-inline" id="idEmployeeId" placeholder="Cod. Empleado" style="margin-top: -12px; width: 160px">
+                        <input type="text" class="form-control d-inline" id="employeeId" placeholder="Cod. Empleado" style="margin-top: -12px; width: 160px">
                     </div>
 
                     <div class="row custom-radio ml-4 mb-5 mt-2">
@@ -62,7 +71,7 @@
                                 <option>Finanzas</option>
                                 <option>Recursos Humanos</option>
                                 <option>Operaciones</option>
-                                <option>Calidad</option>
+                                <option>TECNOLOGIA DE LA INFORMACION</option>
                             </select>
                         </div>
                     </div>
@@ -72,7 +81,16 @@
                     <h4>Enviar</h4>
                 </button>
 
-                <span class="d-block bg-light text-info pl-2 pr-2 pb-1 pt-1 mt-4">Los volantes han sido enviados</span>
+                <div id="successMessage">
+                    <span class="d-block bg-light text-info pl-2 pr-2 pb-1 pt-1 mt-4">Los volantes han sido enviados</span>
+                </div>
+                
+                <div class="text-center mt-2">
+                    <div id="loadding" class="spinner-grow" style="width: 4rem; height: 4rem;" role="status">
+                        <span class="sr-only">Loading...</span>
+                    </div>
+                </div>
+                
             </form>
         </div>
 
@@ -166,14 +184,51 @@
     //}
 
     $(document).ready(function () {
+        $("#successMessage").hide()
+        $("#loadding").hide()
+
         $("#btnSend").on('click', function (e) {
             e.preventDefault();
+            $("#loadding").show()
 
-            console.log("clicked SEND");
+            const by = $("#by").val()
+            const employeeId = $("#employeeId").val()
+            const directorateId = $('#directorateSelected option:selected').val()
+            const entityId = by == "employee" ? employeeId : directorateId
+            const year = $('#yearSelected option:selected').val()
+            const month = $('#monthSelected option:selected').val()
+            const cycle = $('#fortnightSelected option:selected').val()
+
+            $.ajax({
+                "url": `/Ajax/SendPayrollTemplate?by=${by}&entityId=${entityId}&year=${year}&month=${month}&cycle=${cycle}`,
+                "type": "POST",
+                "success": function (response) {
+                    $("#loadding").hide()
+
+                    console.log(response);
+                    if (response === "200") {
+                        $("#successMessage span").text("Los volantes han sido enviados")
+                        $("#successMessage span").removeClass('error-payroll')
+                    } else {
+                        $("#successMessage span").text(response)
+                        $("#successMessage span").addClass('error-payroll')
+                    }
+
+                    $("#successMessage").show()
+                }
+            });
         })
 
         $("input[type=radio]").click(function () {
-            console.log($(this).val())
+            
+            const value = $(this).val()
+            console.log(value)
+            $("#by").val(value)
+
+            if (value !== 'all') {
+                $("#by").val(value.replace('oneEmployee', 'employee')
+                                  .replace('oneDirectorate', 'directorate'))
+            }
         });
 
         $("#yearSelected").on('change', function (e) {
@@ -187,8 +242,8 @@
         })
 
         $("#fortnightSelected").on('change', function (e) {
-            var yearSelected = $('#fortnightSelected option:selected').val()
-            console.log(yearSelected)
+            var cycle = $('#fortnightSelected option:selected').val()
+            console.log(cycle)
         })
     });
 
