@@ -73,9 +73,10 @@ namespace VolanteNominaRC.Controllers
 
         public ActionResult UsersList()
         {
-            if (Session["role"] != null && Session["role"].ToString() != "Admin") return RedirectToAction("Index", "Home");
+            if (Session["role"] == null) return RedirectToAction("Index", "Home");
+            if (Session["role"].ToString() != "Admin") return RedirectToAction("Index", "Home");
 
-            using(var db = new VolanteNominaEntities())
+            using (var db = new VolanteNominaEntities())
             {
                 var users = db.Users.ToList().OrderByDescending(o => o.CreatedDate);
                 return View(users);

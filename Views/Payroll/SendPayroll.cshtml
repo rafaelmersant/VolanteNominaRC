@@ -102,55 +102,12 @@
                         <th scope="col" class="text-center">Fecha</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr>
+                <tbody id="payrollsSent">
+                    
+                    @*<tr>
                         <th scope="row" class="text-center">11</th>
                         <td class="text-center">25/04/2019</td>
-                    </tr>
-                    <tr>
-                        <th scope="row" class="text-center">11</th>
-                        <td class="text-center">25/04/2019</td>
-                    </tr>
-                    <tr>
-                        <th scope="row" class="text-center">11</th>
-                        <td class="text-center">25/04/2019</td>
-                    </tr>
-                    <tr>
-                        <th scope="row" class="text-center">11</th>
-                        <td class="text-center">25/04/2019</td>
-                    </tr>
-                    <tr>
-                        <th scope="row" class="text-center">11</th>
-                        <td class="text-center">25/04/2019</td>
-                    </tr>
-                    <tr>
-                        <th scope="row" class="text-center">11</th>
-                        <td class="text-center">25/04/2019</td>
-                    </tr>
-                    <tr>
-                        <th scope="row" class="text-center">11</th>
-                        <td class="text-center">25/04/2019</td>
-                    </tr>
-                    <tr>
-                        <th scope="row" class="text-center">11</th>
-                        <td class="text-center">25/04/2019</td>
-                    </tr>
-                    <tr>
-                        <th scope="row" class="text-center">11</th>
-                        <td class="text-center">25/04/2019</td>
-                    </tr>
-                    <tr>
-                        <th scope="row" class="text-center">11</th>
-                        <td class="text-center">25/04/2019</td>
-                    </tr>
-                    <tr>
-                        <th scope="row" class="text-center">11</th>
-                        <td class="text-center">25/04/2019</td>
-                    </tr>
-                    <tr>
-                        <th scope="row" class="text-center">11</th>
-                        <td class="text-center">25/04/2019</td>
-                    </tr>
+                    </tr>*@
                 </tbody>
             </table>
 
@@ -183,13 +140,36 @@
     //    }
     //}
 
+    const refreshPayrollsSent = () => {
+        $.ajax({
+            "url": `/Ajax/GetPayrollsSent/`,
+            "type": "GET",
+            "success": function (data) {
+                console.log(data)
+
+                let rows = "";
+                data.forEach(function (item) {
+                    const row = `<tr><th scope="row" class='text-center'>${item.Count}</th> <td class="text-center">${item.Date}</td> </tr>`;
+                    rows += row;
+                })
+
+                $("#payrollsSent").html(rows);
+            }
+        })
+    }
+
     $(document).ready(function () {
         $("#successMessage").hide()
         $("#loadding").hide()
+        refreshPayrollsSent();
 
         $("#btnSend").on('click', function (e) {
             e.preventDefault();
+            refreshPayrollsSent();
+
+            $("#successMessage").hide()
             $("#loadding").show()
+            $(this).attr('disabled', 'disabled')
 
             const by = $("#by").val()
             const employeeId = $("#employeeId").val()
@@ -198,25 +178,34 @@
             const year = $('#yearSelected option:selected').val()
             const month = $('#monthSelected option:selected').val()
             const cycle = $('#fortnightSelected option:selected').val()
+            const monthName = $('#monthSelected option:selected').text()
 
-            $.ajax({
-                "url": `/Ajax/SendPayrollTemplate?by=${by}&entityId=${entityId}&year=${year}&month=${month}&cycle=${cycle}`,
-                "type": "POST",
-                "success": function (response) {
-                    $("#loadding").hide()
+            if (confirm(`Confirmar que desea enviar los volantes de nomina correspondientes al AÑO: ${year} MES: ${monthName} QUINCENA: ${cycle}`)) {
+                $.ajax({
+                    "url": `/Ajax/SendPayrollTemplate?by=${by}&entityId=${entityId}&year=${year}&month=${month}&cycle=${cycle}`,
+                    "type": "POST",
+                    "success": function (response) {
+                        $("#loadding").hide()
 
-                    console.log(response);
-                    if (response === "200") {
-                        $("#successMessage span").text("Los volantes han sido enviados")
-                        $("#successMessage span").removeClass('error-payroll')
-                    } else {
-                        $("#successMessage span").text(response)
-                        $("#successMessage span").addClass('error-payroll')
+                        console.log(response);
+                        if (response === "200") {
+                            $("#successMessage span").text("Los volantes han sido enviados")
+                            $("#successMessage span").removeClass('error-payroll')
+                        } else {
+                            $("#successMessage span").text(response)
+                            $("#successMessage span").addClass('error-payroll')
+                        }
+
+                        $("#successMessage").show()
+                        $("#btnSend").removeAttr('disabled')
+                        refreshPayrollsSent();
                     }
-
-                    $("#successMessage").show()
-                }
-            });
+                });
+            } else {
+                $("#loadding").hide()
+                $("#successMessage").show()
+                $("#btnSend").removeAttr('disabled')
+            }
         })
 
         $("input[type=radio]").click(function () {

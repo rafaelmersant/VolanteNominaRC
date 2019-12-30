@@ -9,6 +9,7 @@ using System.Data;
 using System.Configuration;
 using System.Net.Mail;
 using System.Net;
+using VolanteNominaRC.Models;
 
 namespace VolanteNominaRC.Controllers
 {
@@ -69,6 +70,7 @@ namespace VolanteNominaRC.Controllers
         {
             bool sent = false;
             string content = string.Empty;
+            string EmployeeId = Session["employeeId"].ToString();
 
             try
             {
@@ -153,6 +155,8 @@ namespace VolanteNominaRC.Controllers
 
                     smtp.Send(message);
                     sent = true;
+
+                    SavePayrollSent(employeeId_, _cycle, EmployeeId);
                 }
             }
             catch (Exception ex)
@@ -164,6 +168,47 @@ namespace VolanteNominaRC.Controllers
                 return "200";
             else
                 return "No fue enviado ningun volante, favor verificar que la información más arriba es correcta.";
+        }
+
+        private void SavePayrollSent(string employeeId, string cycle, string sentBy)
+        {
+            using (var db = new VolanteNominaEntities())
+            {
+                db.PayrollSentHistories.Add(new PayrollSentHistory
+                {
+                    EmployeeId = employeeId,
+                    PayrollCycle = cycle,
+                    SentBy = sentBy,
+                    Sent = DateTime.Now                    
+                });
+                db.SaveChanges();
+            }
+        }
+
+        [HttpGet]
+        public JsonResult GetPayrollsSent()
+        {
+            using (var db = new VolanteNominaEntities())
+            {
+                try
+                {
+                    var lastYear = DateTime.Now.AddDays(-365);
+
+                    var payrollsSent = db.PayrollSentHistories.Where(p => p.Sent >= lastYear)
+                                         .GroupBy(g => new { y = g.Sent.Year, m = g.Sent.Month, d = g.Sent.Day })
+                                         .Select(s => new
+                                            {
+                                                Date = s.Key.d + "/" + s.Key.m + "/" + s.Key.y,
+                                                Count = s.Count()
+                                            }).OrderByDescending(o => o.Date).ToList();
+
+                    return new JsonResult { Data = payrollsSent, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+                }
+                catch(Exception ex)
+                {
+                    return new JsonResult { Data = ex.Message, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+                }
+            }
         }
 
         public static DataSet GetPayrollsBy(string employeeId)

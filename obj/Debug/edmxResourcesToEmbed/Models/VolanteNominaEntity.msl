@@ -40,6 +40,7 @@
       <EntityTypeMapping TypeName="VolanteNominaModel.PayrollSentHistory">
         <MappingFragment StoreEntitySet="PayrollSentHistory">
           <ScalarProperty Name="SentBy" ColumnName="SentBy" />
+          <ScalarProperty Name="SentDateKey" ColumnName="SentDateKey" />
           <ScalarProperty Name="Sent" ColumnName="Sent" />
           <ScalarProperty Name="PayrollCycle" ColumnName="PayrollCycle" />
           <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
