@@ -27,7 +27,6 @@
     <Property Name="EmployeeId" Type="char" MaxLength="4" Nullable="false" />
     <Property Name="PayrollCycle" Type="char" MaxLength="8" Nullable="false" />
     <Property Name="Sent" Type="datetime" Nullable="false" />
-    <Property Name="SentDateKey" Type="date" Nullable="false" />
     <Property Name="SentBy" Type="char" MaxLength="4" Nullable="false" />
   </EntityType>
   <EntityType Name="User">

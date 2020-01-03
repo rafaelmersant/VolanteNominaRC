@@ -145,8 +145,7 @@
             "url": `/Ajax/GetPayrollsSent/`,
             "type": "GET",
             "success": function (data) {
-                console.log(data)
-
+                
                 let rows = "";
                 data.forEach(function (item) {
                     const row = `<tr><th scope="row" class='text-center'>${item.Count}</th> <td class="text-center">${item.Date}</td> </tr>`;
@@ -158,29 +157,53 @@
         })
     }
 
+    const validateBeforeSend = (by) => {
+        
+        if (by === 'employee') {
+            if ($("#employeeId").val() === "")
+                return { "success": false, "message": "Necesita digitar un código de empleado" }
+        }
+
+        return { "success": true, "message": "" }
+    }
+
     $(document).ready(function () {
         $("#successMessage").hide()
         $("#loadding").hide()
-        refreshPayrollsSent();
+        refreshPayrollsSent()
 
         $("#btnSend").on('click', function (e) {
-            e.preventDefault();
-            refreshPayrollsSent();
-
+            e.preventDefault()
             $("#successMessage").hide()
-            $("#loadding").show()
-            $(this).attr('disabled', 'disabled')
+            $("#successMessage span").text("")
 
             const by = $("#by").val()
             const employeeId = $("#employeeId").val()
             const directorateId = $('#directorateSelected option:selected').val()
             const entityId = by == "employee" ? employeeId : directorateId
-            const year = $('#yearSelected option:selected').val()
-            const month = $('#monthSelected option:selected').val()
-            const cycle = $('#fortnightSelected option:selected').val()
-            const monthName = $('#monthSelected option:selected').text()
+            const year = $("#yearSelected option:selected").val()
+            const month = $("#monthSelected option:selected").val()
+            const cycle = $("#fortnightSelected option:selected").val()
+            const monthName = $("#monthSelected option:selected").text()
 
-            if (confirm(`Confirmar que desea enviar los volantes de nomina correspondientes al AÑO: ${year} MES: ${monthName} QUINCENA: ${cycle}`)) {
+            const validate = validateBeforeSend(by)
+            if (validate && validate.success === false) {
+                $("#successMessage").show()
+                $("#successMessage span").text(validate.message)
+                $("#successMessage span").addClass('error-payroll')
+                
+                return false;
+            }
+            
+            $("#loadding").show()
+            $(this).attr('disabled', 'disabled')
+
+            let whom = by === "employee" ? ` para el empleado ${employeeId}` : ` a todos`
+            whom = by === "oneDirectorate" ? ` a la Dirección de ${directorateId}` : whom
+
+            return false;
+
+            if (confirm(`Confirmar que desea enviar los volantes de nomina correspondientes al AÑO: ${year} MES: ${monthName} QUINCENA: ${cycle} ${whom}`)) {
                 $.ajax({
                     "url": `/Ajax/SendPayrollTemplate?by=${by}&entityId=${entityId}&year=${year}&month=${month}&cycle=${cycle}`,
                     "type": "POST",

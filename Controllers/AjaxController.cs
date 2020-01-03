@@ -133,28 +133,40 @@ namespace VolanteNominaRC.Controllers
                     content = content.Replace("##discountTotal##", String.Format("{0:#,##0.00}", payrollDetail.discountTotal));
                     content = content.Replace("##total##", String.Format("{0:#,##0.00}", payrollDetail.total));
 
-                    SmtpClient smtp = new SmtpClient
+                    try
                     {
-                        Host = ConfigurationManager.AppSettings["smtpClient"],
-                        Port = int.Parse(ConfigurationManager.AppSettings["PortMail"]),
-                        UseDefaultCredentials = false,
-                        DeliveryMethod = SmtpDeliveryMethod.Network,
-                        Credentials = new NetworkCredential(ConfigurationManager.AppSettings["usrEmail"], ConfigurationManager.AppSettings["pwdEmail"]),
-                        EnableSsl = true,
-                    };
+                        //if(payrollDetail.cecorreoel != string.Empty)
+                        //{
 
-                    MailMessage message = new MailMessage();
-                    message.IsBodyHtml = true;
-                    message.Body = content;
-                    message.Subject = "VOLANTE NOMINA " + payrollDetail.cedescpago + " " + _cycle;
-                    message.To.Add(new MailAddress("rafaelmersant@sagaracorp.com")); //payrollDetail.cecorreoel
+                        //}
 
-                    string address = ConfigurationManager.AppSettings["EMail"];
-                    string displayName = ConfigurationManager.AppSettings["EMailName"];
-                    message.From = new MailAddress(address, displayName);
+                        SmtpClient smtp = new SmtpClient
+                        {
+                            Host = ConfigurationManager.AppSettings["smtpClient"],
+                            Port = int.Parse(ConfigurationManager.AppSettings["PortMail"]),
+                            UseDefaultCredentials = false,
+                            DeliveryMethod = SmtpDeliveryMethod.Network,
+                            Credentials = new NetworkCredential(ConfigurationManager.AppSettings["usrEmail"], ConfigurationManager.AppSettings["pwdEmail"]),
+                            EnableSsl = true,
+                        };
 
-                    smtp.Send(message);
-                    sent = true;
+                        MailMessage message = new MailMessage();
+                        message.IsBodyHtml = true;
+                        message.Body = content;
+                        message.Subject = "VOLANTE NOMINA " + payrollDetail.cedescpago + " " + _cycle;
+                        message.To.Add(new MailAddress("rafaelmersant@sagaracorp.com")); //payrollDetail.cecorreoel
+
+                        string address = ConfigurationManager.AppSettings["EMail"];
+                        string displayName = ConfigurationManager.AppSettings["EMailName"];
+                        message.From = new MailAddress(address, displayName);
+
+                        smtp.Send(message);
+                        sent = true;
+                    }
+                    catch(Exception ex)
+                    {
+                        Console.WriteLine(ex.Message);
+                    }
 
                     SavePayrollSent(employeeId_, _cycle, EmployeeId);
                 }
@@ -200,7 +212,7 @@ namespace VolanteNominaRC.Controllers
                                             {
                                                 Date = s.Key.d + "/" + s.Key.m + "/" + s.Key.y,
                                                 Count = s.Count()
-                                            }).OrderByDescending(o => o.Date).ToList();
+                                            }).OrderByDescending(o => o.Date).Take(12).ToList();
 
                     return new JsonResult { Data = payrollsSent, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
                 }
@@ -209,6 +221,27 @@ namespace VolanteNominaRC.Controllers
                     return new JsonResult { Data = ex.Message, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
                 }
             }
+        }
+
+        public string GetEmailByEmployeeId(string employeeId)
+        {
+            try
+            {
+                using(var db = new VolanteNominaEntities())
+                {
+                    var employee = db.Users.FirstOrDefault(e => e.EmployeeID == employeeId);
+                    if(employee != null)
+                    {
+                        return employee.Email;
+                    }
+                }
+            }
+            catch(Exception ex)
+            {
+                return ex.Message;
+            }
+
+            return string.Empty;
         }
 
         public static DataSet GetPayrollsBy(string employeeId)

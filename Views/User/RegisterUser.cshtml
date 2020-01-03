@@ -4,6 +4,12 @@
     ViewBag.Title = "Registrar nuevo usuario";
 }
 
+<style>
+    .disable-button {
+        cursor: not-allowed;
+    }
+</style>
+
 <div class="container col-7 shadow p-3 mb-5 bg-white rounded">
     <h3 class="bg-secondary text-light pl-2 pr-2">Nuevo Usuario</h3>
     <div class="col-12 pb-3 pt-3 bg-light">
@@ -50,11 +56,11 @@
 
             </div>
 
-            <button class="btn btn-danger w-100" type="submit">
+            <button id="createUser" class="btn btn-danger w-100" type="submit">
                 Crear Usuario
             </button>
 
-            <span class="d-block bg-light text-@ViewBag.Result pl-2 pr-2 pb-1 pt-1 mt-3 mb-0 text-center">@ViewBag.Message</span>
+            <span id="message" class="d-block bg-light text-@ViewBag.Result pl-2 pr-2 pb-1 pt-1 mt-3 mb-0 text-center">@ViewBag.Message</span>
 
         }
     </div>
@@ -80,6 +86,19 @@
         $("#Identification").keypress(function () {
             if (this.value.length >= 11)
                 return false;
+        });
+
+        $("#PasswordHash").keyup(function () {
+            if (this.value.length < 4 || this.value === $("#EmployeeID").val()) {
+                $("#createUser").attr("disabled", "disabled");
+                $("#createUser").addClass("disable-button");
+                $("#message").text('Verifique que la contraseña tiene minimo 4 digitos y que no es igual al Código de Empleado.')
+            }
+            else {
+                $("#createUser").removeAttr("disabled");
+                $("#createUser").removeClass("disable-button");
+                $("#message").text('');
+            }
         });
 
     });

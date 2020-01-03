@@ -46,7 +46,6 @@
     <Property Name="EmployeeId" Type="String" Nullable="false" MaxLength="4" FixedLength="true" Unicode="false" />
     <Property Name="PayrollCycle" Type="String" Nullable="false" MaxLength="8" FixedLength="true" Unicode="false" />
     <Property Name="Sent" Type="DateTime" Nullable="false" Precision="3" />
-    <Property Name="SentDateKey" Type="DateTime" Nullable="false" Precision="0" />
     <Property Name="SentBy" Type="String" Nullable="false" MaxLength="4" FixedLength="true" Unicode="false" />
   </EntityType>
 </Schema>

@@ -16,10 +16,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/10/2013 16:29:20</publishTime>
     </File>
     <File Include="bin/App_global.asax.compiled">
-      <publishTime>12/19/2019 18:27:23</publishTime>
+      <publishTime>12/31/2019 12:50:23</publishTime>
     </File>
     <File Include="bin/App_global.asax.dll">
-      <publishTime>12/19/2019 18:27:22</publishTime>
+      <publishTime>12/31/2019 12:50:23</publishTime>
     </File>
     <File Include="bin/EntityFramework.dll">
       <publishTime>06/07/2018 11:03:48</publishTime>
@@ -211,10 +211,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>02/01/2018 12:20:56</publishTime>
     </File>
     <File Include="bin/VolanteNominaRC.dll">
-      <publishTime>12/19/2019 18:27:14</publishTime>
+      <publishTime>12/31/2019 12:49:56</publishTime>
     </File>
     <File Include="bin/VolanteNominaRC.pdb">
-      <publishTime>12/19/2019 18:27:14</publishTime>
+      <publishTime>12/31/2019 12:49:56</publishTime>
     </File>
     <File Include="bin/WebGrease.dll">
       <publishTime>01/23/2014 13:57:34</publishTime>
@@ -400,10 +400,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>12/05/2019 12:18:52</publishTime>
     </File>
     <File Include="Models/VolanteNominaEntity.edmx.diagram">
-      <publishTime>12/18/2019 00:50:43</publishTime>
+      <publishTime>12/30/2019 00:31:43</publishTime>
     </File>
     <File Include="PrecompiledApp.config">
-      <publishTime>12/19/2019 18:27:15</publishTime>
+      <publishTime>12/31/2019 12:50:01</publishTime>
     </File>
     <File Include="Scripts/bootstrap.js">
       <publishTime>12/05/2019 14:29:13</publishTime>
@@ -720,6 +720,9 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="Scripts/umd/popper.min.js.map">
       <publishTime>12/05/2019 14:28:51</publishTime>
     </File>
+    <File Include="Templates/payrollDetail.html">
+      <publishTime>12/29/2019 15:30:58</publishTime>
+    </File>
     <File Include="Views/Home/About.cshtml">
       <publishTime>12/05/2019 12:18:52</publishTime>
     </File>
@@ -733,10 +736,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>12/08/2019 15:45:08</publishTime>
     </File>
     <File Include="Views/Payroll/PayrollsByEmployee.cshtml">
-      <publishTime>12/19/2019 18:27:05</publishTime>
+      <publishTime>12/28/2019 09:56:52</publishTime>
     </File>
     <File Include="Views/Payroll/SendPayroll.cshtml">
-      <publishTime>12/10/2019 22:07:17</publishTime>
+      <publishTime>12/31/2019 12:49:35</publishTime>
     </File>
     <File Include="Views/Payroll/ViewPayroll.cshtml">
       <publishTime>12/18/2019 01:02:10</publishTime>
@@ -772,7 +775,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>12/05/2019 12:18:52</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>12/19/2019 18:14:48</publishTime>
+      <publishTime>12/30/2019 09:22:22</publishTime>
     </File>
   </ItemGroup>
 </Project>
