@@ -140,28 +140,8 @@ namespace VolanteNominaRC.Controllers
 
                         //}
 
-                        SmtpClient smtp = new SmtpClient
-                        {
-                            Host = ConfigurationManager.AppSettings["smtpClient"],
-                            Port = int.Parse(ConfigurationManager.AppSettings["PortMail"]),
-                            UseDefaultCredentials = false,
-                            DeliveryMethod = SmtpDeliveryMethod.Network,
-                            Credentials = new NetworkCredential(ConfigurationManager.AppSettings["usrEmail"], ConfigurationManager.AppSettings["pwdEmail"]),
-                            EnableSsl = true,
-                        };
-
-                        MailMessage message = new MailMessage();
-                        message.IsBodyHtml = true;
-                        message.Body = content;
-                        message.Subject = "VOLANTE NOMINA " + payrollDetail.cedescpago + " " + _cycle;
-                        message.To.Add(new MailAddress("rafaelmersant@sagaracorp.com")); //payrollDetail.cecorreoel
-
-                        string address = ConfigurationManager.AppSettings["EMail"];
-                        string displayName = ConfigurationManager.AppSettings["EMailName"];
-                        message.From = new MailAddress(address, displayName);
-
-                        smtp.Send(message);
-                        sent = true;
+                        string email = "rafaelmersant@sagaracorp.com"; //payrollDetail.cecorreoel
+                        sent = SendPayrollEmail(email, content, payrollDetail.cedescpago, _cycle);
                     }
                     catch(Exception ex)
                     {
@@ -180,6 +160,73 @@ namespace VolanteNominaRC.Controllers
                 return "200";
             else
                 return "No fue enviado ningun volante, favor verificar que la información más arriba es correcta.";
+        }
+
+        private bool SendPayrollEmail(string email, string content, string descPago, string cycle)
+        {
+            bool sent = false;
+
+            SmtpClient smtp = new SmtpClient
+            {
+                Host = ConfigurationManager.AppSettings["smtpClient"],
+                Port = int.Parse(ConfigurationManager.AppSettings["PortMail"]),
+                UseDefaultCredentials = false,
+                DeliveryMethod = SmtpDeliveryMethod.Network,
+                Credentials = new NetworkCredential(ConfigurationManager.AppSettings["usrEmail"], ConfigurationManager.AppSettings["pwdEmail"]),
+                EnableSsl = true,
+            };
+
+            MailMessage message = new MailMessage();
+            message.IsBodyHtml = true;
+            message.Body = content;
+            message.Subject = "VOLANTE NOMINA " + descPago + " " + cycle;
+            message.To.Add(new MailAddress(email));
+
+            string address = ConfigurationManager.AppSettings["EMail"];
+            string displayName = ConfigurationManager.AppSettings["EMailName"];
+            message.From = new MailAddress(address, displayName);
+
+            smtp.Send(message);
+            sent = true;
+
+            return sent;
+        }
+
+        public static bool SendRecoverPasswordEmail(string newPassword, string email)
+        {
+            string content = "Su nueva contraseña es: <b>" + newPassword + "</b>";
+
+            SmtpClient smtp = new SmtpClient
+            {
+                Host = ConfigurationManager.AppSettings["smtpClient"],
+                Port = int.Parse(ConfigurationManager.AppSettings["PortMail"]),
+                UseDefaultCredentials = false,
+                DeliveryMethod = SmtpDeliveryMethod.Network,
+                Credentials = new NetworkCredential(ConfigurationManager.AppSettings["usrEmail"], ConfigurationManager.AppSettings["pwdEmail"]),
+                EnableSsl = true,
+            };
+
+            MailMessage message = new MailMessage();
+            message.IsBodyHtml = true;
+            message.Body = content;
+            message.Subject = "NUEVA CONTRASEÑA VOLANTE NOMINA";
+            message.To.Add(new MailAddress(email));
+
+            string address = ConfigurationManager.AppSettings["EMail"];
+            string displayName = ConfigurationManager.AppSettings["EMailName"];
+            message.From = new MailAddress(address, displayName);
+
+            try
+            {
+                smtp.Send(message);
+
+                return true;
+            }
+            catch(Exception ex)
+            {
+                return false;
+            }
+   
         }
 
         private void SavePayrollSent(string employeeId, string cycle, string sentBy)

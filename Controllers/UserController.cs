@@ -252,8 +252,54 @@ namespace VolanteNominaRC.Controllers
             return View();
         }
 
+        [HttpPost]
+        public JsonResult RecoverPassword(string employeeId, string email, string identification)
+        {
+            try
+            {
+                using (var db = new VolanteNominaEntities())
+                {
+                    //This EmployeeId exists ?
+                    var _userEmployeeId = db.Users.FirstOrDefault(u => u.EmployeeID == employeeId);
+                    if (_userEmployeeId == null) throw new Exception("Este código de empleado no fue encontrado.");
+
+                    //This Identification exists ?
+                    var _userIdentification = db.Users.FirstOrDefault(u => u.Identification == identification);
+                    if (_userIdentification == null) throw new Exception("Esta cédula no fue encontrada.");
+
+                    var _userRelationship = db.Users.FirstOrDefault(u => u.Identification == identification && u.EmployeeID == employeeId);
+                    if (_userRelationship == null) throw new Exception("Esta cédula no esta relacionada a este empleado.");
+
+                    var user_edit = db.Users.FirstOrDefault(u => u.EmployeeID == employeeId);
+                    string newPassword = Environment.TickCount.ToString().Substring(0, 4);
+                    string newPasswordHash = AjaxController.SHA256(newPassword);
+
+                    user_edit.PasswordHash = newPasswordHash;
+                    db.SaveChanges();
+
+                    AjaxController.SendRecoverPasswordEmail(newPassword, email);
+
+                    return new JsonResult { Data = "200", JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+                }
+            }
+            catch (Exception ex)
+            {
+                return new JsonResult { Data = ex.Message, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+            }
+        }
+
+        public ActionResult ChangePassword()
+        {
+            if (Session["role"] == null) return RedirectToAction("Index", "Home");
+
+            return View();
+        }
+
         public ActionResult ExceptionForEmployees()
         {
+            if (Session["role"] == null) return RedirectToAction("Index", "Home");
+            if (Session["role"].ToString() != "Admin") return RedirectToAction("Index", "Home");
+
             return View();
         }
     }
