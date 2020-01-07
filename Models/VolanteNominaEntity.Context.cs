@@ -29,5 +29,6 @@ namespace VolanteNominaRC.Models
         public virtual DbSet<LoginHistory> LoginHistories { get; set; }
         public virtual DbSet<PayrollSeenHistory> PayrollSeenHistories { get; set; }
         public virtual DbSet<PayrollSentHistory> PayrollSentHistories { get; set; }
+        public virtual DbSet<ExceptionsEmployee> ExceptionsEmployees { get; set; }
     }
 }

@@ -25,8 +25,9 @@
                 <ul class="navbar-nav">
                     @if (Session["role"] != null && Session["role"].ToString() == "Admin")
                     {
-                        <li class="nav-item"><a href="/payroll/SendPayroll" class="nav-link">Envio de Volantes</a></li>
                         <li class="nav-item"><a href="/payroll/PayrollsByEmployee" class="nav-link">Consulta Volante</a></li>
+                        <li class="nav-item"><a href="/payroll/SendPayroll" class="nav-link">Envio de Volantes</a></li>
+                        <li class="nav-item"><a href="/user/ExceptionForEmployees" class="nav-link">Excepciones</a></li>
                         <li class="nav-item"><a href="/user/UsersList" class="nav-link">Usuarios</a></li>
                     }
                     else

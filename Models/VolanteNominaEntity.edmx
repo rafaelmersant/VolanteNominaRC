@@ -5,6 +5,14 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="VolanteNominaModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="ExceptionsEmployees">
+          <Key>
+            <PropertyRef Name="EmployeeId" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EmployeeId" Type="char" MaxLength="4" Nullable="false" />
+          <Property Name="DateAdded" Type="datetime" Nullable="false" />
+        </EntityType>
         <EntityType Name="LoginHistory">
           <Key>
             <PropertyRef Name="Id" />
@@ -48,6 +56,7 @@
           <Property Name="CreatedDate" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityContainer Name="VolanteNominaModelStoreContainer">
+          <EntitySet Name="ExceptionsEmployees" EntityType="Self.ExceptionsEmployees" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="LoginHistory" EntityType="Self.LoginHistory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PayrollSeenHistory" EntityType="Self.PayrollSeenHistory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PayrollSentHistory" EntityType="Self.PayrollSentHistory" Schema="dbo" store:Type="Tables" />
@@ -62,6 +71,7 @@
           <EntitySet Name="LoginHistories" EntityType="VolanteNominaModel.LoginHistory" />
           <EntitySet Name="PayrollSeenHistories" EntityType="VolanteNominaModel.PayrollSeenHistory" />
           <EntitySet Name="PayrollSentHistories" EntityType="VolanteNominaModel.PayrollSentHistory" />
+          <EntitySet Name="ExceptionsEmployees" EntityType="VolanteNominaModel.ExceptionsEmployee" />
         </EntityContainer>
         <EntityType Name="User">
           <Key>
@@ -104,6 +114,14 @@
           <Property Name="PayrollCycle" Type="String" Nullable="false" MaxLength="8" FixedLength="true" Unicode="false" />
           <Property Name="Sent" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="SentBy" Type="String" Nullable="false" MaxLength="4" FixedLength="true" Unicode="false" />
+        </EntityType>
+        <EntityType Name="ExceptionsEmployee">
+          <Key>
+            <PropertyRef Name="EmployeeId" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EmployeeId" Type="String" Nullable="false" MaxLength="4" FixedLength="true" Unicode="false" />
+          <Property Name="DateAdded" Type="DateTime" Nullable="false" Precision="3" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -152,6 +170,15 @@
                 <ScalarProperty Name="SentBy" ColumnName="SentBy" />
                 <ScalarProperty Name="Sent" ColumnName="Sent" />
                 <ScalarProperty Name="PayrollCycle" ColumnName="PayrollCycle" />
+                <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ExceptionsEmployees">
+            <EntityTypeMapping TypeName="VolanteNominaModel.ExceptionsEmployee">
+              <MappingFragment StoreEntitySet="ExceptionsEmployees">
+                <ScalarProperty Name="DateAdded" ColumnName="DateAdded" />
                 <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>

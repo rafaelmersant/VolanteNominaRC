@@ -295,6 +295,37 @@ namespace VolanteNominaRC.Controllers
             return View();
         }
 
+        [HttpPost]
+        public JsonResult ChangePassword(string currentPassword, string newPassword)
+        {
+            try
+            {
+                using (var db = new VolanteNominaEntities())
+                {
+                    string employeeId = Session["employeeID"].ToString();
+                    string password = AjaxController.SHA256(currentPassword);
+
+                    var currentUser = db.Users.FirstOrDefault(u => u.EmployeeID == employeeId && u.PasswordHash == password);
+
+                    if(currentUser != null)
+                    {
+                        currentUser.PasswordHash = AjaxController.SHA256(newPassword);
+                        db.SaveChanges();
+                    }
+                    else
+                    {
+                        throw new Exception("La contraseña actual es incorrecta, favor verificar.");
+                    }
+
+                    return new JsonResult { Data = "200", JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+                }
+            }
+            catch (Exception ex)
+            {
+                return new JsonResult { Data = ex.Message, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+            }
+        }
+
         public ActionResult ExceptionForEmployees()
         {
             if (Session["role"] == null) return RedirectToAction("Index", "Home");
