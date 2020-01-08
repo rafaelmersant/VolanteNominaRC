@@ -84,8 +84,14 @@ namespace VolanteNominaRC.Controllers
 
                 DataSet employees = GetEmployeesPayroll(by, entityId, _cycle);
 
+                var exceptions = GetExceptionsEmployees(_cycle);
+
                 foreach (DataRow row in employees.Tables[0].Rows)
                 {
+                    if (by != "employee")
+                        if (exceptions.FirstOrDefault(e => e == row.ItemArray[0].ToString()) != null)
+                            continue;
+
                     content = messageBody;
 
                     string employeeId_ = row.ItemArray[0].ToString();
@@ -160,6 +166,27 @@ namespace VolanteNominaRC.Controllers
                 return "200";
             else
                 return "No fue enviado ningun volante, favor verificar que la información más arriba es correcta.";
+        }
+
+        private List<string> GetExceptionsEmployees(string cycle)
+        {
+            try
+            {
+                using (var db = new VolanteNominaEntities())
+                {
+                    var exceptions = db.ExceptionsEmployees.Select(e => e.EmployeeId).ToList();
+                    var alreadySent = db.PayrollSentHistories.Where(p => p.PayrollCycle == cycle).Select(s => s.EmployeeId);
+
+                    var all = exceptions.Union(alreadySent).ToList();
+
+                    return all;
+                }
+            }
+            catch(Exception ex)
+            {
+                return null;
+            }
+            
         }
 
         private bool SendPayrollEmail(string email, string content, string descPago, string cycle)
@@ -254,12 +281,15 @@ namespace VolanteNominaRC.Controllers
                     var lastYear = DateTime.Now.AddDays(-365);
 
                     var payrollsSent = db.PayrollSentHistories.Where(p => p.Sent >= lastYear)
-                                         .GroupBy(g => new { y = g.Sent.Year, m = g.Sent.Month, d = g.Sent.Day })
+                                         .GroupBy(g => new { y = g.Sent.Year, m = g.Sent.Month, d = g.Sent.Day })                                         
                                          .Select(s => new
                                             {
                                                 Date = s.Key.d + "/" + s.Key.m + "/" + s.Key.y,
+                                                DateOrder = s.Key.y + "/" + s.Key.m + "/" + s.Key.d,
                                                 Count = s.Count()
-                                            }).OrderByDescending(o => o.Date).Take(12).ToList();
+                                            })
+                                            .OrderByDescending(s => s.Date)
+                                            .Take(12).ToList();
 
                     return new JsonResult { Data = payrollsSent, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
                 }

@@ -5,6 +5,7 @@
     <EntitySet Name="LoginHistories" EntityType="VolanteNominaModel.LoginHistory" />
     <EntitySet Name="PayrollSeenHistories" EntityType="VolanteNominaModel.PayrollSeenHistory" />
     <EntitySet Name="PayrollSentHistories" EntityType="VolanteNominaModel.PayrollSentHistory" />
+    <EntitySet Name="ExceptionsEmployees" EntityType="VolanteNominaModel.ExceptionsEmployee" />
   </EntityContainer>
   <EntityType Name="User">
     <Key>
@@ -47,5 +48,13 @@
     <Property Name="PayrollCycle" Type="String" Nullable="false" MaxLength="8" FixedLength="true" Unicode="false" />
     <Property Name="Sent" Type="DateTime" Nullable="false" Precision="3" />
     <Property Name="SentBy" Type="String" Nullable="false" MaxLength="4" FixedLength="true" Unicode="false" />
+  </EntityType>
+  <EntityType Name="ExceptionsEmployee">
+    <Key>
+      <PropertyRef Name="EmployeeId" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="EmployeeId" Type="String" Nullable="false" MaxLength="4" FixedLength="true" Unicode="false" />
+    <Property Name="DateAdded" Type="DateTime" Nullable="false" Precision="3" />
   </EntityType>
 </Schema>

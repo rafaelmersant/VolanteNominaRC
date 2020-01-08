@@ -331,7 +331,76 @@ namespace VolanteNominaRC.Controllers
             if (Session["role"] == null) return RedirectToAction("Index", "Home");
             if (Session["role"].ToString() != "Admin") return RedirectToAction("Index", "Home");
 
+            using (var db = new VolanteNominaEntities())
+            {
+                try
+                {
+                    ViewBag.exceptions = db.ExceptionsEmployees.ToList();
+
+                }
+                catch(Exception ex)
+                {
+                    ViewBag.message = ex.Message;
+                }
+            }
+            
             return View();
+        }
+
+        [HttpPost]
+        public JsonResult AddExceptionForEmployee(string employeeId)
+        {
+            try
+            {
+                using (var db = new VolanteNominaEntities())
+                {
+                    var exceptions = db.ExceptionsEmployees.FirstOrDefault(e => e.EmployeeId == employeeId);
+
+                    if (exceptions != null)
+                    {
+                        throw new Exception("Este empleado ya fue agregado en el listado de excepciones.");
+                    }
+                    else
+                    {
+                        db.ExceptionsEmployees.Add(new ExceptionsEmployee
+                        {
+                            EmployeeId = employeeId,
+                            DateAdded = DateTime.Now
+                        });
+
+                        db.SaveChanges();
+                    }
+
+                    return new JsonResult { Data = "200", JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+                }
+            }
+            catch (Exception ex)
+            {
+                return new JsonResult { Data = ex.Message, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+            }
+        }
+
+        [HttpPost]
+        public JsonResult RemoveFromException(string employeeId)
+        {
+            try
+            {
+                using (var db = new VolanteNominaEntities())
+                {
+                    var _employee = db.ExceptionsEmployees.FirstOrDefault(e => e.EmployeeId == employeeId);
+                    if (_employee != null)
+                    {
+                        db.ExceptionsEmployees.Remove(_employee);
+                        db.SaveChanges();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                return Json(new { result = "500", message = ex.Message });
+            }
+
+            return Json(new { result = "200", message = "Success" });
         }
     }
 }

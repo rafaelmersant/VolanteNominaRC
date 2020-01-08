@@ -145,7 +145,7 @@
             "url": `/Ajax/GetPayrollsSent/`,
             "type": "GET",
             "success": function (data) {
-                
+                console.log(data)
                 let rows = "";
                 data.forEach(function (item) {
                     const row = `<tr><th scope="row" class='text-center'>${item.Count}</th> <td class="text-center">${item.Date}</td> </tr>`;
@@ -200,8 +200,6 @@
 
             let whom = by === "employee" ? ` para el empleado ${employeeId}` : ` a todos`
             whom = by === "oneDirectorate" ? ` a la Dirección de ${directorateId}` : whom
-
-            return false;
 
             if (confirm(`Confirmar que desea enviar los volantes de nomina correspondientes al AÑO: ${year} MES: ${monthName} QUINCENA: ${cycle} ${whom}`)) {
                 $.ajax({
