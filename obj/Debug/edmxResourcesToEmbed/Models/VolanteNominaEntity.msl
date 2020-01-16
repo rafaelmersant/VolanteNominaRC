@@ -36,21 +36,31 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="PayrollSentHistories">
-      <EntityTypeMapping TypeName="VolanteNominaModel.PayrollSentHistory">
-        <MappingFragment StoreEntitySet="PayrollSentHistory">
-          <ScalarProperty Name="SentBy" ColumnName="SentBy" />
-          <ScalarProperty Name="Sent" ColumnName="Sent" />
-          <ScalarProperty Name="PayrollCycle" ColumnName="PayrollCycle" />
+    <EntitySetMapping Name="ExceptionsEmployees">
+      <EntityTypeMapping TypeName="VolanteNominaModel.ExceptionsEmployee">
+        <MappingFragment StoreEntitySet="ExceptionsEmployees">
+          <ScalarProperty Name="DateAdded" ColumnName="DateAdded" />
           <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
           <ScalarProperty Name="Id" ColumnName="Id" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="ExceptionsEmployees">
-      <EntityTypeMapping TypeName="VolanteNominaModel.ExceptionsEmployee">
-        <MappingFragment StoreEntitySet="ExceptionsEmployees">
-          <ScalarProperty Name="DateAdded" ColumnName="DateAdded" />
+    <FunctionImportMapping FunctionImportName="GetSentPayrollsGrouped" FunctionName="VolanteNominaModel.Store.GetSentPayrollsGrouped">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="VolanteNominaModel.GetSentPayrollsGrouped_Result">
+          <ScalarProperty Name="Count" ColumnName="Count" />
+          <ScalarProperty Name="Date" ColumnName="Date" />
+          <ScalarProperty Name="DateOrder" ColumnName="DateOrder" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <EntitySetMapping Name="PayrollSentHistories">
+      <EntityTypeMapping TypeName="VolanteNominaModel.PayrollSentHistory">
+        <MappingFragment StoreEntitySet="PayrollSentHistory">
+          <ScalarProperty Name="SentBy" ColumnName="SentBy" />
+          <ScalarProperty Name="Sent" ColumnName="Sent" />
+          <ScalarProperty Name="PayrollType" ColumnName="PayrollType" />
+          <ScalarProperty Name="PayrollCycle" ColumnName="PayrollCycle" />
           <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
           <ScalarProperty Name="Id" ColumnName="Id" />
         </MappingFragment>

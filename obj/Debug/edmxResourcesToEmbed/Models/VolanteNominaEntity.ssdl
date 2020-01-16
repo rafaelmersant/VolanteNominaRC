@@ -34,6 +34,7 @@
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="EmployeeId" Type="char" MaxLength="4" Nullable="false" />
     <Property Name="PayrollCycle" Type="char" MaxLength="8" Nullable="false" />
+    <Property Name="PayrollType" Type="char" MaxLength="2" />
     <Property Name="Sent" Type="datetime" Nullable="false" />
     <Property Name="SentBy" Type="char" MaxLength="4" Nullable="false" />
   </EntityType>
@@ -50,6 +51,7 @@
     <Property Name="Email" Type="varchar" MaxLength="40" />
     <Property Name="CreatedDate" Type="datetime" Nullable="false" />
   </EntityType>
+  <Function Name="GetSentPayrollsGrouped" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
   <EntityContainer Name="VolanteNominaModelStoreContainer">
     <EntitySet Name="ExceptionsEmployees" EntityType="Self.ExceptionsEmployees" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="LoginHistory" EntityType="Self.LoginHistory" Schema="dbo" store:Type="Tables" />

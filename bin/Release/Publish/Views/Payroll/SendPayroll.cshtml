@@ -8,6 +8,10 @@
         color: red !important;
     }
 
+    .disable-button {
+        pointer-events: none;
+    }
+
 </style>
 
 <div class="container col-12 shadow p-3 mb-5 bg-white rounded">
@@ -68,10 +72,14 @@
                         </div>
                         <div class="ml-1">
                             <select class="form-control" id="directorateSelected">
-                                <option>Finanzas</option>
-                                <option>Recursos Humanos</option>
-                                <option>Operaciones</option>
+                                <option>DIRECCION DE OPERACIONES</option>
+                                <option>DIRECCION GESTION HUMANA</option>
+                                <option>DIRECCION COMERCIAL</option>
+                                <option>DIRECCION DE FINANZAS</option>
+                                <option>DIRECCION DE COMPRAS</option>
+                                <option>GESTION HUMANA</option>
                                 <option>TECNOLOGIA DE LA INFORMACION</option>
+                                
                             </select>
                         </div>
                     </div>
@@ -103,11 +111,7 @@
                     </tr>
                 </thead>
                 <tbody id="payrollsSent">
-                    
-                    @*<tr>
-                        <th scope="row" class="text-center">11</th>
-                        <td class="text-center">25/04/2019</td>
-                    </tr>*@
+               
                 </tbody>
             </table>
 
@@ -145,11 +149,11 @@
             "url": `/Ajax/GetPayrollsSent/`,
             "type": "GET",
             "success": function (data) {
-                console.log(data)
-
+                
                 let rows = "";
                 data.forEach(function (item) {
-                    const row = `<tr><th scope="row" class='text-center'>${item.Count}</th> <td class="text-center">${item.Date}</td> </tr>`;
+                    const date = item.DateOrder.substr(0, 4) + "-" + item.DateOrder.substr(4, 2) + "-" + item.DateOrder.substr(6, 2);
+                    const row = `<tr><th scope="row" class='text-center'> <a style='text-decorations: none' href='/Payroll/PayrollsSentDetailed/?date=${date}'>${item.Count} <a/> </th> <td class="text-center">${item.Date}</td> </tr>`;
                     rows += row;
                 })
 
@@ -158,24 +162,25 @@
         })
     }
 
+    const validateBeforeSend = (by) => {
+        
+        if (by === 'employee') {
+            if ($("#employeeId").val() === "")
+                return { "success": false, "message": "Necesita digitar un código de empleado" }
+        }
+
+        return { "success": true, "message": "" }
+    }
+
     $(document).ready(function () {
         $("#successMessage").hide()
         $("#loadding").hide()
-        refreshPayrollsSent();
-
-        const validateBeforeSend = (by) => {
-            if (by === 'employee') {
-                if ($("#employee").val() === "")
-                    return {"success": false, "message": "Necesita digitar un código de empleado"}
-            }
-        }
+        refreshPayrollsSent()
 
         $("#btnSend").on('click', function (e) {
-            e.preventDefault();
-            
+            e.preventDefault()
             $("#successMessage").hide()
-            $("#loadding").show()
-            $(this).attr('disabled', 'disabled')
+            $("#successMessage span").text("")
 
             const by = $("#by").val()
             const employeeId = $("#employeeId").val()
@@ -186,13 +191,25 @@
             const cycle = $("#fortnightSelected option:selected").val()
             const monthName = $("#monthSelected option:selected").text()
 
-            const validate = validateBeforeSend(by);
-            if (validate.success == false) {
-                $("#message").val(validate.message)
+            const validate = validateBeforeSend(by)
+            if (validate && validate.success === false) {
+                $("#successMessage").show()
+                $("#successMessage span").text(validate.message)
+                $("#successMessage span").addClass('error-payroll')
+                
                 return false;
             }
+            
+            $("#loadding").show()
+            $(this).attr('disabled', 'disabled')
+            $(this).addClass("disable-button")
 
-            if (confirm(`Confirmar que desea enviar los volantes de nomina correspondientes al AÑO: ${year} MES: ${monthName} QUINCENA: ${cycle}`)) {
+            let whom = by === "employee" ? ` para el empleado ${employeeId}` : ` a todos`
+            whom = by === "oneDirectorate" ? ` a la Dirección de ${directorateId}` : whom
+
+            if (confirm(`Confirmar que desea enviar los volantes de nomina correspondientes al AÑO: ${year} MES: ${monthName} QUINCENA: ${cycle} ${whom}`)) {
+                console.log(`/Ajax/SendPayrollTemplate?by=${by}&entityId=${entityId}&year=${year}&month=${month}&cycle=${cycle}`);
+
                 $.ajax({
                     "url": `/Ajax/SendPayrollTemplate?by=${by}&entityId=${entityId}&year=${year}&month=${month}&cycle=${cycle}`,
                     "type": "POST",
@@ -210,6 +227,7 @@
 
                         $("#successMessage").show()
                         $("#btnSend").removeAttr('disabled')
+                        $("#btnSend").removeClass('disable-button')
                         refreshPayrollsSent();
                     }
                 });
@@ -217,6 +235,7 @@
                 $("#loadding").hide()
                 $("#successMessage").show()
                 $("#btnSend").removeAttr('disabled')
+                $("#btnSend").removeClass('disable-button')
             }
         })
 

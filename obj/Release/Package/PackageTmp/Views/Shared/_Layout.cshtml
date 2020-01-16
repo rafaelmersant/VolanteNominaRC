@@ -25,8 +25,9 @@
                 <ul class="navbar-nav">
                     @if (Session["role"] != null && Session["role"].ToString() == "Admin")
                     {
-                        <li class="nav-item"><a href="/payroll/SendPayroll" class="nav-link">Envio de Volantes</a></li>
                         <li class="nav-item"><a href="/payroll/PayrollsByEmployee" class="nav-link">Consulta Volante</a></li>
+                        <li class="nav-item"><a href="/payroll/SendPayroll" class="nav-link">Envio de Volantes</a></li>
+                        <li class="nav-item"><a href="/user/ExceptionForEmployees" class="nav-link">Excepciones</a></li>
                         <li class="nav-item"><a href="/user/UsersList" class="nav-link">Usuarios</a></li>
                     }
                     else
@@ -42,7 +43,7 @@
                     @if (Session["role"] != null)
                     {
                         <li class="nav-item"><a href="/user/logout" class="nav-link">Cerrar Sesión</a></li>
-                        <li class="nav-item"><a href="javascript:void(0)" class="nav-link"><span class="mr-2">|</span> @Session["email"]</a>  </li>
+                        <li class="nav-item"><a href="user/ChangePassword" class="nav-link"><span class="mr-2">|</span> @Session["email"]</a>  </li>
                     }
                     else
                     {

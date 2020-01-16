@@ -147,6 +147,8 @@ namespace VolanteNominaRC.Controllers
         {
             if (Session["role"] != null && Session["role"].ToString() != "Admin") return RedirectToAction("Index", "Home");
 
+            ViewBag.Roles = GetRoles();
+
             if (IdHash == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -160,8 +162,6 @@ namespace VolanteNominaRC.Controllers
                     return HttpNotFound();
                 }
 
-                ViewBag.Roles = GetRoles();
-
                 return View(_user);
             }
         }
@@ -170,6 +170,9 @@ namespace VolanteNominaRC.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(User _user)
         {
+
+            ViewBag.Roles = GetRoles();
+
             if (ModelState.IsValid)
             {
                 try
@@ -207,7 +210,6 @@ namespace VolanteNominaRC.Controllers
                     ViewBag.Message = ex.Message;
                 }
 
-                ViewBag.Roles = GetRoles();
                 return View(_user);
             }
 

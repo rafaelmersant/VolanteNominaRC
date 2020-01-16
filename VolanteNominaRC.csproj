@@ -159,6 +159,9 @@
     <Compile Include="Models\ExceptionsEmployee.cs">
       <DependentUpon>VolanteNominaEntity.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\GetSentPayrollsGrouped_Result.cs">
+      <DependentUpon>VolanteNominaEntity.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\LoginHistory.cs">
       <DependentUpon>VolanteNominaEntity.tt</DependentUpon>
     </Compile>
@@ -204,6 +207,7 @@
     <Content Include="Content\font-awesome\HELP-US-OUT.txt" />
     <Content Include="Content\images\RCLogo.PNG" />
     <Content Include="Content\jquery\dist\jquery.min.js" />
+    <Content Include="Content\PrintPayroll.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
@@ -399,6 +403,7 @@
     <Content Include="Views\User\Edit.cshtml" />
     <Content Include="Views\Payroll\ViewPayroll.cshtml" />
     <Content Include="Views\User\ChangePassword.cshtml" />
+    <Content Include="Views\Payroll\PayrollsSentDetailed.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

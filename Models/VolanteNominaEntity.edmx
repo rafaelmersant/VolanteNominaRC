@@ -39,6 +39,7 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="EmployeeId" Type="char" MaxLength="4" Nullable="false" />
           <Property Name="PayrollCycle" Type="char" MaxLength="8" Nullable="false" />
+          <Property Name="PayrollType" Type="char" MaxLength="2" />
           <Property Name="Sent" Type="datetime" Nullable="false" />
           <Property Name="SentBy" Type="char" MaxLength="4" Nullable="false" />
         </EntityType>
@@ -55,6 +56,7 @@
           <Property Name="Email" Type="varchar" MaxLength="40" />
           <Property Name="CreatedDate" Type="datetime" Nullable="false" />
         </EntityType>
+        <Function Name="GetSentPayrollsGrouped" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <EntityContainer Name="VolanteNominaModelStoreContainer">
           <EntitySet Name="ExceptionsEmployees" EntityType="Self.ExceptionsEmployees" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="LoginHistory" EntityType="Self.LoginHistory" Schema="dbo" store:Type="Tables" />
@@ -70,8 +72,9 @@
           <EntitySet Name="Users" EntityType="VolanteNominaModel.User" />
           <EntitySet Name="LoginHistories" EntityType="VolanteNominaModel.LoginHistory" />
           <EntitySet Name="PayrollSeenHistories" EntityType="VolanteNominaModel.PayrollSeenHistory" />
-          <EntitySet Name="PayrollSentHistories" EntityType="VolanteNominaModel.PayrollSentHistory" />
           <EntitySet Name="ExceptionsEmployees" EntityType="VolanteNominaModel.ExceptionsEmployee" />
+          <FunctionImport Name="GetSentPayrollsGrouped" ReturnType="Collection(VolanteNominaModel.GetSentPayrollsGrouped_Result)" />
+          <EntitySet Name="PayrollSentHistories" EntityType="VolanteNominaModel.PayrollSentHistory" />
         </EntityContainer>
         <EntityType Name="User">
           <Key>
@@ -105,16 +108,6 @@
           <Property Name="SeenBy" Type="String" Nullable="false" MaxLength="4" FixedLength="true" Unicode="false" />
           <Property Name="Machine" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
         </EntityType>
-        <EntityType Name="PayrollSentHistory">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="EmployeeId" Type="String" Nullable="false" MaxLength="4" FixedLength="true" Unicode="false" />
-          <Property Name="PayrollCycle" Type="String" Nullable="false" MaxLength="8" FixedLength="true" Unicode="false" />
-          <Property Name="Sent" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="SentBy" Type="String" Nullable="false" MaxLength="4" FixedLength="true" Unicode="false" />
-        </EntityType>
         <EntityType Name="ExceptionsEmployee">
           <Key>
             <PropertyRef Name="EmployeeId" />
@@ -122,6 +115,22 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="EmployeeId" Type="String" Nullable="false" MaxLength="4" FixedLength="true" Unicode="false" />
           <Property Name="DateAdded" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <ComplexType Name="GetSentPayrollsGrouped_Result">
+          <Property Type="Int32" Name="Count" Nullable="true" />
+          <Property Type="String" Name="Date" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="DateOrder" Nullable="true" MaxLength="10" />
+        </ComplexType>
+        <EntityType Name="PayrollSentHistory">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EmployeeId" Type="String" Nullable="false" MaxLength="4" FixedLength="true" Unicode="false" />
+          <Property Name="PayrollCycle" Type="String" Nullable="false" MaxLength="8" FixedLength="true" Unicode="false" />
+          <Property Name="PayrollType" Type="String" MaxLength="2" FixedLength="true" Unicode="false" />
+          <Property Name="Sent" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="SentBy" Type="String" Nullable="false" MaxLength="4" FixedLength="true" Unicode="false" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -164,21 +173,31 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="PayrollSentHistories">
-            <EntityTypeMapping TypeName="VolanteNominaModel.PayrollSentHistory">
-              <MappingFragment StoreEntitySet="PayrollSentHistory">
-                <ScalarProperty Name="SentBy" ColumnName="SentBy" />
-                <ScalarProperty Name="Sent" ColumnName="Sent" />
-                <ScalarProperty Name="PayrollCycle" ColumnName="PayrollCycle" />
+          <EntitySetMapping Name="ExceptionsEmployees">
+            <EntityTypeMapping TypeName="VolanteNominaModel.ExceptionsEmployee">
+              <MappingFragment StoreEntitySet="ExceptionsEmployees">
+                <ScalarProperty Name="DateAdded" ColumnName="DateAdded" />
                 <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="ExceptionsEmployees">
-            <EntityTypeMapping TypeName="VolanteNominaModel.ExceptionsEmployee">
-              <MappingFragment StoreEntitySet="ExceptionsEmployees">
-                <ScalarProperty Name="DateAdded" ColumnName="DateAdded" />
+          <FunctionImportMapping FunctionImportName="GetSentPayrollsGrouped" FunctionName="VolanteNominaModel.Store.GetSentPayrollsGrouped">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="VolanteNominaModel.GetSentPayrollsGrouped_Result">
+                <ScalarProperty Name="Count" ColumnName="Count" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="DateOrder" ColumnName="DateOrder" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <EntitySetMapping Name="PayrollSentHistories">
+            <EntityTypeMapping TypeName="VolanteNominaModel.PayrollSentHistory">
+              <MappingFragment StoreEntitySet="PayrollSentHistory">
+                <ScalarProperty Name="SentBy" ColumnName="SentBy" />
+                <ScalarProperty Name="Sent" ColumnName="Sent" />
+                <ScalarProperty Name="PayrollType" ColumnName="PayrollType" />
+                <ScalarProperty Name="PayrollCycle" ColumnName="PayrollCycle" />
                 <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>

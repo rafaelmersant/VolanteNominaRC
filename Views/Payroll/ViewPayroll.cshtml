@@ -9,28 +9,31 @@
         font-size: 14px;
     }
 </style>
+<link rel="stylesheet" href="~/Content/PrintPayroll.css" />
 
-<div id="payrollBody" style="width: 680px" class="center-block shadow pl-4 pr-4 pb-4 pt-4">
-    <table style="width:100%">
+<div id="payrollBody" style="width: 780px" class="center-block shadow pl-4 pr-4 pb-4 pt-4">
+    <table style="width: 100%; margin-bottom: 10px">
         <tr>
             <td><span style="font-weight:bold">RADIOCENTRO, S.A.S.</span></td>
             <td><span style="font-weight:bold">@ViewBag.PayrollDetail.cedescpago</span></td>
             <td>CICLO: @ViewBag.PayrollDetail.ceciclopag.Substring(6, 2)</td>
         </tr>
         <tr>
-            <td><span style="color:red">EMP-ADMINISTRATIVOS</span></td>
-            <td><span style="color:red">AFILIACION SEGURIDAD SOCIAL...</span></td>
+            <td><span style="color:red" title="Tipo de Empleado"></span></td>
+            <td>@ViewBag.SeguridadSocial</td>
         </tr>
         <tr>
-            <td><span>* VOLANTE DE PAGO *</span></td>
-            <td><span style="color:red">01 de MARZO DEL 2019 AL 15 DE MARZO DE 2019</span></td>
+            <td><span>*VOLANTE DE PAGO*</span></td>
+            <td>@ViewBag.RangeCovered</td>
         </tr>
     </table>
 
-    <hr />
-    <table style="width:100%">
+    <table style="width: 100%">
+        <tr style="border-top: 1px dashed gray;">
+            <td colspan="4" style="padding: 6px 0"></td>
+        </tr>
         <tr>
-            <td><span style="font-weight:bold">NOMBRE</span></td>
+            <td><span style="font-weight:bold;">NOMBRE</span></td>
             <td>@ViewBag.PayrollDetail.cenomemple</td>
             <td><span style="font-weight:bold">NO. EMPLEADO</span></td>
             <td style="text-align: right">@ViewBag.PayrollDetail.cecodemple</td>
@@ -38,42 +41,50 @@
         <tr>
             <td><span style="font-weight:bold">CARGO</span></td>
             <td>@ViewBag.PayrollDetail.cenomcargo</td>
-            <td><span style="font-weight:bold">DEPTO.</span></td>
-            <td style="text-align: right"><span style="color:red">07-02-01</span></td>
+            <td><span style="font-weight:bold">CUENTA</span></td>
+            <td style="text-align: right">@ViewBag.PayrollDetail.cecuebanco</td>
         </tr>
         <tr>
-            <td><span style="font-weight:bold">CUENTA</span></td>
-            <td><span style="color:red">225-5566-2</span></td>
+            <td><span style="font-weight:bold">DEPTO.</span></td>
+            <td>@ViewBag.PayrollDetail.cenomdepto</td>
             <td><span style="font-weight:bold">CEDULA</span></td>
-            <td style="text-align: right"><span style="color:red">001-00014574-1</span></td>
+            <td style="text-align: right">@ViewBag.PayrollDetail.cenumcedul</td>
         </tr>
     </table>
 
-    <table style="width:100%">
-        <tr>
-            <td colspan="3">---------------------------------------------------------------------------------------------------------------------------------------</td>
+    <table style="width: 100%">
+        <tr style="border-bottom: 1px dashed gray;">
+            <td colspan="4" style="padding: 5px 0"></td>
         </tr>
         <tr>
-            <td style="width: 60%"><span>FORMA DE PAGO: <span style="color:red">TRANSFERENCIA</span></span></td>
-            <td style="width: 20%; text-align: right">INGRESOS</td>
-            <td style="width: 20%; text-align: right">DEDUCCIONES</td>
+            <td style="width: 55%; padding: 10px 0">@ViewBag.PayrollDetail.cedescfpag</td>
+            <td style="width: 15%; text-align: right">BALANCE</td>
+            <td style="width: 15%; text-align: right">INGRESOS</td>
+            <td style="width: 15%; text-align: right">DEDUCCIONES</td>
         </tr>
-        <tr>
-            <td colspan="3">---------------------------------------------------------------------------------------------------------------------------------------</td>
+        <tr style="border-bottom: 1px dashed gray">
+            <td colspan="4"></td>
         </tr>
-        </table>
-        <table style="width:100%" class="table-striped">
+    </table>
+    <table style="width:100%" class="table-striped">
         @foreach (var item in ViewBag.PayrollDetail.detail)
         {
             <tr>
-                <td style="width: 60%">@(item.ceingdeduc)-@item.cetipotrans @item.cedesctran</td>
-                <td style="width: 20%; text-align: right">
+                <td style="width: 55%">@(item.ceingdeduc)-@item.cetipotrans @item.cedesctran</td>
+                <td style="width: 15%; text-align: right">
+                    @if (item.ceingdeduc == "D" && item.cebalaactu > 0)
+                    {
+                        <span>@String.Format("{0:#,##0.00}", item.cebalaactu)</span>
+                    }
+                </td>
+                
+                <td style="width: 15%; text-align: right">
                     @if (item.ceingdeduc == "I")
                     {
                         <span>@String.Format("{0:#,##0.00}", item.cevaltrans)</span>
                     }
                 </td>
-                <td style="width: 20%; text-align: right">
+                <td style="width: 15%; text-align: right">
                     @if (item.ceingdeduc == "D")
                     {
                         <span>@String.Format("{0:#,##0.00}", item.cevaltrans)</span>
@@ -81,27 +92,65 @@
                 </td>
             </tr>
         }
-        </table>
-        
+    </table>
+
     <table style="width:100%">
         <tr>
-            <td style="width: 60%"></td>
-            <td style="width: 20%; text-align: right">=============</td>
-            <td style="width: 20%; text-align: right">=============</td>
+            <td style="width: 55%"></td>
+            <td style="width: 15%; text-align: right">=============</td>
+            <td style="width: 15%; text-align: right">=============</td>
+            <td style="width: 15%; text-align: right">=============</td>
         </tr>
         <tr>
             <td><span style="font-weight:bold">TOTALES</span></td>
+            <td style="text-align:right"><span style="font-weight:bold">@String.Format("{0:#,##0.00}", ViewBag.PayrollDetail.balanceTotal)</span></td>
             <td style="text-align:right"><span style="font-weight:bold">@String.Format("{0:#,##0.00}", ViewBag.PayrollDetail.incomeTotal)</span></td>
             <td style="text-align:right"><span style="font-weight:bold">@String.Format("{0:#,##0.00}", ViewBag.PayrollDetail.discountTotal)</span></td>
         </tr>
     </table>
 
-    <div style="padding-top: 40px; text-align:right">
+    <div style="padding-top: 40px; text-align:right; margin-right: 10px">
         NETO A RECIBIR RD$ <span style="font-size:1.5em; font-weight:bold">@String.Format("{0:#,##0.00}", ViewBag.PayrollDetail.total)</span>
     </div>
-    
+
 </div>
 
 <div class="center-block mt-3">
     <a href="javascript:history.back()" class="btn btn-outline-danger pl-3 pr-3">Regresar al listado de volantes</a>
+
+    <button type="button" class="btn btn-outline-info ml-4" data-toggle="modal" data-target="#exampleModal">
+        Ultimas consultas
+    </button>
+</div>
+
+<!-- Button trigger modal -->
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Ultimas 12 consultas</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <table style="width:100%" class="table-striped">
+                    @foreach (var item in ViewBag.Last12Seen)
+                    {
+                        <tr>
+                            <td style="width: 20%; text-align: center">
+                                @String.Format("{0:dd-MM-yyyy hh:mm tt}", item.SeenTime)
+                            </td>
+                        </tr>
+                    }
+                </table>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
 </div>

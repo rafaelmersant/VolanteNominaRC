@@ -1,0 +1,15 @@
+﻿
+@media print {
+    body * {
+        visibility: hidden;
+    }
+
+    #payrollBody, #payrollBody * {
+
+        visibility: visible;
+    }
+
+    #payrollBody {
+        margin-top: 45px;
+    }
+}

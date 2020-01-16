@@ -37,14 +37,26 @@ namespace VolanteNominaRC.Controllers
             if (Session["role"] == null) return RedirectToAction("Login", "User");
 
             string EmployeeId = Session["employeeId"].ToString();
+            int fortnight = int.Parse(period.Substring(period.Length - 2, 2));
+            string year = period.Substring(0, 4);
+            string month = period.Substring(4, 2);
+
             DataSet payrollDetail = GetPayrollDetailForEmployee(EmployeeId, period, paytype);
 
             PayrollDetailHeader payroll = GetPayrollDetail(payrollDetail);
             ViewBag.PayrollDetail = payroll;
+            ViewBag.RangeCovered = GetPayrollRangeCovered(month, year, fortnight);
+            ViewBag.SeguridadSocial = payroll.cenusegsoc.Length > 5 ? "AFILIACION SEGURIDAD SOCIAL..." : "";
 
             string seenBy = User != null && User.Identity.Name.Length > 0 ? User.Identity.Name : Session["employeeId"].ToString();
 
             SavePayrollSeenHistory(Session["employeeId"].ToString(), payroll.ceciclopag, seenBy);
+
+            using (var db = new VolanteNominaEntities())
+            {
+                ViewBag.Last12Seen = db.PayrollSeenHistories.Where(s => s.PayrollCycle == period).OrderByDescending(o => o.SeenTime).ToList().Take(12);
+            }
+            
             return View();
         }
 
@@ -67,6 +79,20 @@ namespace VolanteNominaRC.Controllers
             return View();
         }
 
+        public ActionResult PayrollsSentDetailed(string date)
+        {
+            using(var db = new VolanteNominaEntities())
+            {
+                DateTime _date = DateTime.Parse(date);
+
+                ViewBag.SentDetailed = db.PayrollSentHistories.Where(s => s.Sent.Year == _date.Year && 
+                                                                     s.Sent.Month == _date.Month && 
+                                                                     s.Sent.Day == _date.Day).OrderBy(o => o.EmployeeId).ToList();
+            }
+
+            return View();
+        }
+
         //Map to object to get all payrolls
         private List<Payroll> GetPayrolls(DataSet data)
         {
@@ -81,7 +107,7 @@ namespace VolanteNominaRC.Controllers
 
                     payrolls.Add(new Payroll {
                         period = period,
-                        fortnight = GetPaymentNo(fortnight), //+ " " + period.Substring(period.Length - 2, 2),
+                        fortnight = GetPaymentNo(fortnight),
                         year = period.Substring(0, 4),
                         month = GetMonthName(period.Substring(4, 2)),
                         description = row.ItemArray[1].ToString(),
@@ -116,7 +142,7 @@ namespace VolanteNominaRC.Controllers
             }
         }
 
-        private string GetMonthName(string month)
+        private static string GetMonthName(string month)
         {
             string _month = "Desconocido";
 
@@ -146,5 +172,17 @@ namespace VolanteNominaRC.Controllers
 
             return "1ra.";
         }
+
+        public static string GetPayrollRangeCovered(string month, string year, int fortnight)
+        {
+            string result = string.Empty;
+            string monthName = GetMonthName(month).ToUpper();
+
+            if (fortnight % 2 == 0)                
+                return "16 DE " + monthName + " DE " + year + " AL " + DateTime.DaysInMonth(int.Parse(year), int.Parse(month)).ToString() + " DE " + monthName + " DE " + year;
+            
+            return result = "01 DE " + monthName + " DE " + year + " AL 15 DE " + monthName + " DE " + year;
+        }
+
     }
 }

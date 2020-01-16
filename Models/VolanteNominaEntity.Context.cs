@@ -12,6 +12,8 @@ namespace VolanteNominaRC.Models
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
+    using System.Data.Entity.Core.Objects;
+    using System.Linq;
     
     public partial class VolanteNominaEntities : DbContext
     {
@@ -28,7 +30,12 @@ namespace VolanteNominaRC.Models
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<LoginHistory> LoginHistories { get; set; }
         public virtual DbSet<PayrollSeenHistory> PayrollSeenHistories { get; set; }
-        public virtual DbSet<PayrollSentHistory> PayrollSentHistories { get; set; }
         public virtual DbSet<ExceptionsEmployee> ExceptionsEmployees { get; set; }
+        public virtual DbSet<PayrollSentHistory> PayrollSentHistories { get; set; }
+    
+        public virtual ObjectResult<GetSentPayrollsGrouped_Result> GetSentPayrollsGrouped()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetSentPayrollsGrouped_Result>("GetSentPayrollsGrouped");
+        }
     }
 }

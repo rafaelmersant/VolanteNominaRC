@@ -1,7 +1,167 @@
 ﻿
 @{
-    ViewBag.Title = "ExceptionForEmployees";
+    ViewBag.Title = "Excepciones";
 }
 
-<h2>ExceptionForEmployees</h2>
+<div class="mb-4 bg-light panel-custom">
+    <span class="panel-title">
+        No enviar volante a estos empleados
+    </span>
+    <span style="margin-left: 34em;"><input type="text" name="_employeeId" id="_employeeId" value="" placeholder="Código de Empleado" /></span>
+    <button id="btnAdd" class="btn btn-danger btn-sm">Agregar</button>
+
+    @*<div class="row pt-3 pb-4">
+            <div class="col-11" style="display: flex; justify-content: flex-end">
+                <input type="text" name="_employeeId" id="_employeeId" value="" class="form-control" placeholder="Código de Empleado" />
+            </div>
+            <div class="col-1">
+                <button id="btnAdd" class="btn btn-danger btn-sm">Agregar</button>
+            </div>
+        </div>*@
+
+</div>
+
+
+<div>
+  
+    
+
+    <table id="exceptionsTable" class="table table-striped table-bordered">
+        <thead>
+            <tr>
+                <th>
+                    Código
+                </th>
+                @*<th>
+                    Nombre
+                </th>*@
+                <th>
+                    Agregado
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in ViewBag.exceptions)
+            {
+                <tr>
+                    <td>@item.EmployeeId</td>
+                    @*<td>Nombre del Empleado</td>*@
+                    <td>@item.DateAdded</td>
+
+                    <td align="center">
+                        <a class="btn btn-sm btn-danger" href="javascript:void(0)" onclick="removeEmployee(@item.EmployeeId)">
+                            <i class="fa fa-remove"></i>
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<link href="~/Content/dataTables.bootstrap4.min.css" rel="stylesheet" />
+
+@section scripts {
+    <script src="~/Scripts/jquery.dataTables.min.js"></script>
+    <script src="~/Scripts/dataTables.bootstrap4.min.js"></script>
+
+}
+<script type="text/javascript">
+
+    const removeEmployee = (employeeId) => {
+        if (confirm(`Seguro que desea eliminar del listado el Empleado de código ${employeeId} ?`)) {
+            $.ajax({
+                "url": "/User/RemoveFromException?employeeId=" + employeeId,
+                "type": "POST",
+                "success": function (response) {
+                    
+                    if (response.result === "200") {
+                        window.location.reload();
+                    } else {
+                        console.log(response.message);
+                        alert('Hubo un error tratando de eliminar el empleado de la lista (Contacte al administrador del sistema).');
+                    }
+                }
+            });
+        }
+    }
+
+    $(document).ready(function () {
+        $("#exceptionsTable").DataTable();
+
+        $("#btnAdd").click(function (e) {
+            e.preventDefault();
+
+            const employeeId = $("#_employeeId").val();
+            if (employeeId === "") {
+                alert("Favor especificar un codigo de empleado");
+                return false;
+            }
+
+            $.ajax({
+                "url": "/User/AddExceptionForEmployee?employeeId=" + employeeId ,
+                "type": "POST",
+                "success": function (response) {
+                    console.log('response', response);
+                    if (response === "200") {
+                        window.location.reload();
+                    } else {
+                        alert(response);
+                    }
+                }
+            });
+        })
+
+        //Replace Previous -> Anterior
+        $('body :not(script)').contents().filter(function () {
+            return this.nodeType === 3;
+        }).replaceWith(function () {
+            return this.nodeValue.replace('Previous', 'Anterior');
+            });
+
+        //Replace Next -> Próximo
+        $('body :not(script)').contents().filter(function () {
+            return this.nodeType === 3;
+        }).replaceWith(function () {
+            return this.nodeValue.replace('Next', 'Próximo');
+        });
+
+        //Replace Showing -> Mostrando
+        $('body :not(script)').contents().filter(function () {
+            return this.nodeType === 3;
+        }).replaceWith(function () {
+            return this.nodeValue.replace('Showing', 'Mostrando');
+        });
+
+        //Replace Show -> Mostrar
+        $('body :not(script)').contents().filter(function () {
+            return this.nodeType === 3;
+        }).replaceWith(function () {
+            return this.nodeValue.replace('Show', 'Mostrar');
+        });
+
+        //Replace Entries -> Registros
+        $('body :not(script)').contents().filter(function () {
+            return this.nodeType === 3;
+        }).replaceWith(function () {
+            return this.nodeValue.replace('entries', 'registros');
+        });
+
+        //Replace Search -> Buscar
+        $('body :not(script)').contents().filter(function () {
+            return this.nodeType === 3;
+        }).replaceWith(function () {
+            return this.nodeValue.replace('Search', 'Buscar');
+            });
+
+        //No data available in table
+        $('body :not(script)').contents().filter(function () {
+            return this.nodeType === 3;
+        }).replaceWith(function () {
+            return this.nodeValue.replace('No data available in table', 'No existen empleados para excluir en el envío de volantes');
+        });
+    });
+
+</script>
 
