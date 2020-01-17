@@ -38,6 +38,7 @@
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="EmployeeId" Type="char" MaxLength="4" Nullable="false" />
+          <Property Name="EmployeeEmail" Type="varchar" MaxLength="50" />
           <Property Name="PayrollCycle" Type="char" MaxLength="8" Nullable="false" />
           <Property Name="PayrollType" Type="char" MaxLength="2" />
           <Property Name="Sent" Type="datetime" Nullable="false" />
@@ -127,6 +128,7 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="EmployeeId" Type="String" Nullable="false" MaxLength="4" FixedLength="true" Unicode="false" />
+          <Property Name="EmployeeEmail" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="PayrollCycle" Type="String" Nullable="false" MaxLength="8" FixedLength="true" Unicode="false" />
           <Property Name="PayrollType" Type="String" MaxLength="2" FixedLength="true" Unicode="false" />
           <Property Name="Sent" Type="DateTime" Nullable="false" Precision="3" />
@@ -198,6 +200,7 @@
                 <ScalarProperty Name="Sent" ColumnName="Sent" />
                 <ScalarProperty Name="PayrollType" ColumnName="PayrollType" />
                 <ScalarProperty Name="PayrollCycle" ColumnName="PayrollCycle" />
+                <ScalarProperty Name="EmployeeEmail" ColumnName="EmployeeEmail" />
                 <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>

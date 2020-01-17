@@ -33,6 +33,7 @@
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="EmployeeId" Type="char" MaxLength="4" Nullable="false" />
+    <Property Name="EmployeeEmail" Type="varchar" MaxLength="50" />
     <Property Name="PayrollCycle" Type="char" MaxLength="8" Nullable="false" />
     <Property Name="PayrollType" Type="char" MaxLength="2" />
     <Property Name="Sent" Type="datetime" Nullable="false" />

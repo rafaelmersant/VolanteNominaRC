@@ -180,7 +180,7 @@ namespace VolanteNominaRC.Controllers
                         else
                             throw new Exception("Este empleado no tiene correo en el sistema.");
 
-                        SavePayrollSent(employeeId_, _cycle, EmployeeId, paytype_);
+                        SavePayrollSent(employeeId_, _cycle, EmployeeId, paytype_, payrollDetail.cecorreoel);
                     }
                     catch(Exception ex)
                     {
@@ -303,13 +303,14 @@ namespace VolanteNominaRC.Controllers
    
         }
 
-        private void SavePayrollSent(string employeeId, string cycle, string sentBy, string paytype)
+        private void SavePayrollSent(string employeeId, string cycle, string sentBy, string paytype, string email)
         {
             using (var db = new VolanteNominaEntities())
             {
                 db.PayrollSentHistories.Add(new PayrollSentHistory
                 {
                     EmployeeId = employeeId,
+                    EmployeeEmail = email,
                     PayrollCycle = cycle,
                     PayrollType = paytype,
                     SentBy = sentBy,

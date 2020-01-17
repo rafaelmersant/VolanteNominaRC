@@ -61,6 +61,7 @@
           <ScalarProperty Name="Sent" ColumnName="Sent" />
           <ScalarProperty Name="PayrollType" ColumnName="PayrollType" />
           <ScalarProperty Name="PayrollCycle" ColumnName="PayrollCycle" />
+          <ScalarProperty Name="EmployeeEmail" ColumnName="EmployeeEmail" />
           <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
           <ScalarProperty Name="Id" ColumnName="Id" />
         </MappingFragment>
