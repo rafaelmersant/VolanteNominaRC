@@ -77,9 +77,6 @@
                                 <option>DIRECCION COMERCIAL</option>
                                 <option>DIRECCION DE FINANZAS</option>
                                 <option>DIRECCION DE COMPRAS</option>
-                                <option>GESTION HUMANA</option>
-                                <option>TECNOLOGIA DE LA INFORMACION</option>
-                                
                             </select>
                         </div>
                     </div>
@@ -205,7 +202,7 @@
             $(this).addClass("disable-button")
 
             let whom = by === "employee" ? ` para el empleado ${employeeId}` : ` a todos`
-            whom = by === "oneDirectorate" ? ` a la Dirección de ${directorateId}` : whom
+            whom = by === "directorate" ? ` a la Dirección de ${directorateId}` : whom
 
             if (confirm(`Confirmar que desea enviar los volantes de nomina correspondientes al AÑO: ${year} MES: ${monthName} QUINCENA: ${cycle} ${whom}`)) {
                 console.log(`/Ajax/SendPayrollTemplate?by=${by}&entityId=${entityId}&year=${year}&month=${month}&cycle=${cycle}`);

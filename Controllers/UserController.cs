@@ -13,6 +13,17 @@ namespace VolanteNominaRC.Controllers
         // GET: User
         public ActionResult Index()
         {
+            //using (var db = new VolanteNominaEntities())
+            //{
+            //    var users = db.Users.ToList();
+
+            //    foreach(var u in users)
+            //    {
+            //        u.PasswordHash = AjaxController.SHA256(u.PasswordHash);
+            //        db.SaveChanges();
+            //    }
+            //}
+
             return View();
         }
 
@@ -286,6 +297,15 @@ namespace VolanteNominaRC.Controllers
             }
             catch (Exception ex)
             {
+                try
+                {
+                    AjaxController.SendRawEmail("rafaelmersant@sagaracorp.com", "Exception in RecoverPassword", ex.ToString());
+                }
+                catch (Exception exq)
+                {
+                    Console.WriteLine(exq.ToString());
+                }
+                
                 return new JsonResult { Data = ex.Message, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
             }
         }
@@ -324,6 +344,15 @@ namespace VolanteNominaRC.Controllers
             }
             catch (Exception ex)
             {
+                try
+                {
+                    AjaxController.SendRawEmail("rafaelmersant@sagaracorp.com", "Exception in ChangePassword", ex.ToString());
+                }
+                catch (Exception exq)
+                {
+                    Console.WriteLine(exq.ToString());
+                }
+
                 return new JsonResult { Data = ex.Message, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
             }
         }
@@ -342,6 +371,15 @@ namespace VolanteNominaRC.Controllers
                 }
                 catch(Exception ex)
                 {
+                    try
+                    {
+                        AjaxController.SendRawEmail("rafaelmersant@sagaracorp.com", "Exception in ExceptionForEmployees", ex.ToString());
+                    }
+                    catch (Exception exq)
+                    {
+                        Console.WriteLine(exq.ToString());
+                    }
+
                     ViewBag.message = ex.Message;
                 }
             }
@@ -378,6 +416,15 @@ namespace VolanteNominaRC.Controllers
             }
             catch (Exception ex)
             {
+                try
+                {
+                    AjaxController.SendRawEmail("rafaelmersant@sagaracorp.com", "Exception in AddExceptionForEmployee", ex.ToString());
+                }
+                catch (Exception exq)
+                {
+                    Console.WriteLine(exq.ToString());
+                }
+
                 return new JsonResult { Data = ex.Message, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
             }
         }
@@ -403,6 +450,21 @@ namespace VolanteNominaRC.Controllers
             }
 
             return Json(new { result = "200", message = "Success" });
+        }
+
+        public ActionResult TestEmail()
+        {
+            try
+            {
+                AjaxController.SendRawEmail("rafaelmersant@sagaracorp.com", "Testing RC...", "This is a test email");
+
+                return Content("Email Sent");
+            }
+            catch(Exception ex)
+            {
+                return Content(ex.ToString());
+            }
+            
         }
     }
 }

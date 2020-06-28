@@ -16,10 +16,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/10/2013 16:29:20</publishTime>
     </File>
     <File Include="bin/App_global.asax.compiled">
-      <publishTime>01/16/2020 16:13:17</publishTime>
+      <publishTime>02/13/2020 18:20:49</publishTime>
     </File>
     <File Include="bin/App_global.asax.dll">
-      <publishTime>01/16/2020 16:13:17</publishTime>
+      <publishTime>02/13/2020 18:20:49</publishTime>
     </File>
     <File Include="bin/EntityFramework.dll">
       <publishTime>06/07/2018 11:03:48</publishTime>
@@ -211,10 +211,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>02/01/2018 12:20:56</publishTime>
     </File>
     <File Include="bin/VolanteNominaRC.dll">
-      <publishTime>01/16/2020 16:13:04</publishTime>
+      <publishTime>02/13/2020 18:20:37</publishTime>
     </File>
     <File Include="bin/VolanteNominaRC.pdb">
-      <publishTime>01/16/2020 16:13:04</publishTime>
+      <publishTime>02/13/2020 18:20:37</publishTime>
     </File>
     <File Include="bin/WebGrease.dll">
       <publishTime>01/23/2014 13:57:34</publishTime>
@@ -403,10 +403,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>12/05/2019 12:18:52</publishTime>
     </File>
     <File Include="Models/VolanteNominaEntity.edmx.diagram">
-      <publishTime>01/16/2020 11:35:39</publishTime>
+      <publishTime>01/17/2020 13:11:41</publishTime>
     </File>
     <File Include="PrecompiledApp.config">
-      <publishTime>01/16/2020 16:13:06</publishTime>
+      <publishTime>02/13/2020 18:20:39</publishTime>
     </File>
     <File Include="Scripts/bootstrap.js">
       <publishTime>12/05/2019 14:29:13</publishTime>
@@ -742,13 +742,13 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>12/28/2019 09:56:52</publishTime>
     </File>
     <File Include="Views/Payroll/PayrollsSentDetailed.cshtml">
-      <publishTime>01/10/2020 17:39:33</publishTime>
+      <publishTime>01/20/2020 12:55:48</publishTime>
     </File>
     <File Include="Views/Payroll/SendPayroll.cshtml">
-      <publishTime>01/16/2020 15:44:40</publishTime>
+      <publishTime>01/30/2020 16:34:04</publishTime>
     </File>
     <File Include="Views/Payroll/ViewPayroll.cshtml">
-      <publishTime>01/15/2020 12:23:06</publishTime>
+      <publishTime>01/17/2020 14:19:27</publishTime>
     </File>
     <File Include="Views/Shared/Error.cshtml">
       <publishTime>12/05/2019 12:18:52</publishTime>

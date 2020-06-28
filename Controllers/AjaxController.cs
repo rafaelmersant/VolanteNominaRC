@@ -190,6 +190,15 @@ namespace VolanteNominaRC.Controllers
             }
             catch (Exception ex)
             {
+                try
+                {
+                    SendRawEmail("rafaelmersant@sagaracorp.com", "Exception in SendPayrollTemplate", ex.ToString());
+                }
+                catch(Exception exq)
+                {
+                    Console.WriteLine(exq.ToString());
+                }
+
                 return ex.Message;
             }
 
@@ -215,6 +224,15 @@ namespace VolanteNominaRC.Controllers
             }
             catch(Exception ex)
             {
+                try
+                {
+                    SendRawEmail("rafaelmersant@sagaracorp.com", "Exception in GetExceptionsEmployees", ex.ToString());
+                }
+                catch (Exception exq)
+                {
+                    Console.WriteLine(exq.ToString());
+                }
+
                 return null;
             }
         }
@@ -230,6 +248,15 @@ namespace VolanteNominaRC.Controllers
             }
             catch (Exception ex)
             {
+                try
+                {
+                    SendRawEmail("rafaelmersant@sagaracorp.com", "Exception in GetAlreadySent", ex.ToString());
+                }
+                catch (Exception exq)
+                {
+                    Console.WriteLine(exq.ToString());
+                }
+
                 return null;
             }
         }
@@ -298,6 +325,15 @@ namespace VolanteNominaRC.Controllers
             }
             catch(Exception ex)
             {
+                try
+                {
+                    SendRawEmail("rafaelmersant@sagaracorp.com", "Exception in SendRecoverPasswordEmail", ex.ToString());
+                }
+                catch (Exception exq)
+                {
+                    Console.WriteLine(exq.ToString());
+                }
+
                 return false;
             }
    
@@ -353,6 +389,15 @@ namespace VolanteNominaRC.Controllers
             }
             catch(Exception ex)
             {
+                try
+                {
+                    SendRawEmail("rafaelmersant@sagaracorp.com", "Exception in GetEmailByEmployeeId", ex.ToString());
+                }
+                catch (Exception exq)
+                {
+                    Console.WriteLine(exq.ToString());
+                }
+
                 return ex.Message;
             }
 
@@ -381,14 +426,14 @@ namespace VolanteNominaRC.Controllers
             else if (by == "directorate")
             {
                 //DEPARTAMENTO --REMOVER
-                sQuery = "SELECT DISTINCT CECODEMPLE, CETIPOPAGO, CECICLOPAG " +
-                " FROM [QS36F.RCNOCE00] WHERE CENOMDEPTO = '" + entityId + "' " +
-                " AND CECICLOPAG = '" + cycle + "'";
+                //sQuery = "SELECT DISTINCT CECODEMPLE, CETIPOPAGO, CECICLOPAG " +
+                //" FROM [QS36F.RCNOCE00] WHERE CENOMDEPTO = '" + entityId + "' " +
+                //" AND CECICLOPAG = '" + cycle + "'";
 
                 //Direccion
-                //sQuery = "SELECT DISTINCT CECODEMPLE, CETIPOPAGO, CECICLOPAG " +
-                //" FROM [QS36F.RCNOCE00] WHERE CEDESDIREC = '" + entityId + "' " +
-                //" AND CECICLOPAG = '" + cycle + "'";
+                sQuery = "SELECT DISTINCT CECODEMPLE, CETIPOPAGO, CECICLOPAG " +
+                " FROM [QS36F.RCNOCE00] WHERE CEDESDIREC = '" + entityId + "' " +
+                " AND CECICLOPAG = '" + cycle + "'";
             }
             else
             {
@@ -527,5 +572,31 @@ namespace VolanteNominaRC.Controllers
             return dsData;
         }
 
+        public static void SendRawEmail(string email, string subject, string body)
+        {
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11;
+
+            SmtpClient smtp = new SmtpClient
+            {
+                Host = ConfigurationManager.AppSettings["smtpClient"],
+                Port = int.Parse(ConfigurationManager.AppSettings["PortMail"]),
+                UseDefaultCredentials = false,
+                DeliveryMethod = SmtpDeliveryMethod.Network,
+                Credentials = new NetworkCredential(ConfigurationManager.AppSettings["usrEmail"], ConfigurationManager.AppSettings["pwdEmail"]),
+                EnableSsl = false,
+            };
+
+            MailMessage message = new MailMessage();
+            message.IsBodyHtml = true;
+            message.Body = body;
+            message.Subject = subject;
+            message.To.Add(new MailAddress(email));
+
+            string address = ConfigurationManager.AppSettings["EMail"];
+            string displayName = ConfigurationManager.AppSettings["EMailName"];
+            message.From = new MailAddress(address, displayName);
+
+            smtp.Send(message);
+        }
     }
 }
