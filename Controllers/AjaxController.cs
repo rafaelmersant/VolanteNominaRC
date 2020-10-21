@@ -454,7 +454,7 @@ namespace VolanteNominaRC.Controllers
 
             sQuery = "SELECT CECODIRE, CETIPOPAGO, CEDESCPAGO, CEINGDEDUC, CETIPTRANS, CEDESCTRAN, CEVALTRANS, CECICLOPAG," +
             " CECODEMPLE, CENOMEMPLE, CENOMDEPTO, CENOMCARGO, CECORREOEL, CECUEBANCO, CENUSEGSOC, CENUMCEDUL, CEDESDIREC," +
-            "  CEDESCFPAG, CEDESCTCUE, CEBALAACTU, CETIPONOM FROM [QS36F.RCNOCE00] WHERE CECODEMPLE = " + employeeId +
+            "  CEDESCFPAG, CEDESCTCUE, CEBALAACTU, CETIPONOM, CECANTIDAD FROM [QS36F.RCNOCE00] WHERE CECODEMPLE = " + employeeId +
             " AND CECICLOPAG = '" + cycle + "' AND CETIPOPAGO = '" + paytype + "' ORDER BY CEINGDEDUC DESC";
 
 
@@ -519,11 +519,27 @@ namespace VolanteNominaRC.Controllers
                     if (row.ItemArray[3].ToString() != "I") payrollDetail.discountTotal += amount;
                     if (row.ItemArray[3].ToString() == "D" && balance > 0) payrollDetail.balanceTotal += balance;
 
+                    //contactenate cantidad to description
+                    string _cedesctran = row.ItemArray[5].ToString();
+                    if (!string.IsNullOrEmpty(row.ItemArray[21].ToString()))
+                    {
+                        try
+                        {
+                            decimal hours = decimal.Parse(row.ItemArray[21].ToString());
+                            if (hours > 0)
+                                _cedesctran += $" ({row.ItemArray[21].ToString()} Horas)";
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine(ex.ToString());
+                        }
+                    }
+
                     payrollDetail.detail.Add(new PayrollDetailRows
                     {
                         ceingdeduc = row.ItemArray[3].ToString(),
                         cetipotrans = row.ItemArray[4].ToString(),
-                        cedesctran = row.ItemArray[5].ToString(),
+                        cedesctran = _cedesctran,
                         cevaltrans = amount,
                         cebalaactu = decimal.Parse(row.ItemArray[19].ToString())
                     });

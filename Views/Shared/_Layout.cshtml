@@ -43,11 +43,14 @@
                     @if (Session["role"] != null)
                     {
                         <li class="nav-item"><a href="/user/logout" class="nav-link">Cerrar Sesión</a></li>
-                        <li class="nav-item"><a href="user/ChangePassword" class="nav-link"><span class="mr-2">|</span> @Session["email"]</a>  </li>
+                        <li class="nav-item"><a href="/user/ChangePassword" class="nav-link"><span class="mr-2">|</span> @Session["email"]</a>  </li>
                     }
                     else
                     {
-                        <li class="nav-item"><a href="/user/login" class="nav-link"></a>Iniciar Sesión</li>
+                        if (ViewContext.RouteData.Values["action"].ToString() != "Login")
+                        {
+                            <li class="nav-item"><a href="/user/login" class="nav-link">Iniciar Sesión</a></li>
+                        }
                     }
 
                 </ul>
