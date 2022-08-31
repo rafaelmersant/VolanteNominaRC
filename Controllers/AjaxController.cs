@@ -96,7 +96,7 @@ namespace VolanteNominaRC.Controllers
                 var exceptions = GetExceptionsEmployees();
                 var alreadySent = GetAlreadySent(_cycle);
 
-                
+
                 foreach (DataRow row in employees.Tables[0].Rows)
                 {
                     string employeeId_ = row.ItemArray[0].ToString();
@@ -115,7 +115,7 @@ namespace VolanteNominaRC.Controllers
                     PayrollDetailHeader payrollDetail = GetPayrollDetail(payroll);
 
                     content = content.Replace("##cedescpago##", payrollDetail.cedescpago);
-                    content = content.Replace("##ceciclopag##", payrollDetail.ceciclopag.Substring(6,2));
+                    content = content.Replace("##ceciclopag##", payrollDetail.ceciclopag.Substring(6, 2));
                     content = content.Replace("##cenomemple##", payrollDetail.cenomemple);
                     content = content.Replace("##cecodemple##", payrollDetail.cecodemple);
                     content = content.Replace("##cenomcargo##", payrollDetail.cenomcargo);
@@ -149,7 +149,7 @@ namespace VolanteNominaRC.Controllers
 
                         string balance = item.ceingdeduc == "D" && item.cebalaactu > 0 ? String.Format("{0:#,##0.00}", item.cebalaactu) : "";
 
-                        string rowForTypeIncome = "<td style='width: 15%; text-align: right'> </td> <td style='width: 15%; text-align: right'> <span>" 
+                        string rowForTypeIncome = "<td style='width: 15%; text-align: right'> </td> <td style='width: 15%; text-align: right'> <span>"
                             + String.Format("{0:#,##0.00}", item.cevaltrans) + "</span> </td> <td style='width: 15%;'></td>";
 
                         string rowForTypeDeductible = "<td style='width: 15%; text-align: right'> <span>" + balance + " </span> </td> <td style='width: 15%; text-align: right'> </td> " +
@@ -157,7 +157,7 @@ namespace VolanteNominaRC.Controllers
 
                         concept = item.ceingdeduc == "I" ? rowForTypeIncome : rowForTypeDeductible;
 
-                        body += "<tr style='background-color: " + rowColor +"'> <td style='width: 55%'>" + item.ceingdeduc + "-" + item.cetipotrans + " " + item.cedesctran + "</td>" + concept + "</tr>";
+                        body += "<tr style='background-color: " + rowColor + "'> <td style='width: 55%'>" + item.ceingdeduc + "-" + item.cetipotrans + " " + item.cedesctran + "</td>" + concept + "</tr>";
 
                         index += 1;
                     }
@@ -174,7 +174,7 @@ namespace VolanteNominaRC.Controllers
                         if (payrollDetail.cecorreoel != string.Empty)
                         {
                             //string email = ConfigurationManager.AppSettings["emailTest"];
-                            string email = payrollDetail.cecorreoel; 
+                            string email = payrollDetail.cecorreoel;
                             sent = SendPayrollEmail(email, content, payrollDetail.cedescpago, _cycle);
                         }
                         else
@@ -182,7 +182,7 @@ namespace VolanteNominaRC.Controllers
 
                         SavePayrollSent(employeeId_, _cycle, EmployeeId, paytype_, payrollDetail.cecorreoel);
                     }
-                    catch(Exception ex)
+                    catch (Exception ex)
                     {
                         Console.WriteLine(ex.Message);
                     }
@@ -194,7 +194,7 @@ namespace VolanteNominaRC.Controllers
                 {
                     SendRawEmail("rafaelmersant@sagaracorp.com", "Exception in SendPayrollTemplate", ex.ToString());
                 }
-                catch(Exception exq)
+                catch (Exception exq)
                 {
                     Console.WriteLine(exq.ToString());
                 }
@@ -222,7 +222,7 @@ namespace VolanteNominaRC.Controllers
                     return exceptions;
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 try
                 {
@@ -323,7 +323,7 @@ namespace VolanteNominaRC.Controllers
 
                 return true;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 try
                 {
@@ -336,7 +336,7 @@ namespace VolanteNominaRC.Controllers
 
                 return false;
             }
-   
+
         }
 
         private void SavePayrollSent(string employeeId, string cycle, string sentBy, string paytype, string email)
@@ -350,7 +350,7 @@ namespace VolanteNominaRC.Controllers
                     PayrollCycle = cycle,
                     PayrollType = paytype,
                     SentBy = sentBy,
-                    Sent = DateTime.Now                    
+                    Sent = DateTime.Now
                 });
                 db.SaveChanges();
             }
@@ -367,7 +367,7 @@ namespace VolanteNominaRC.Controllers
 
                     return new JsonResult { Data = payrollsSent, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     return new JsonResult { Data = ex.Message, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
                 }
@@ -378,16 +378,16 @@ namespace VolanteNominaRC.Controllers
         {
             try
             {
-                using(var db = new VolanteNominaEntities())
+                using (var db = new VolanteNominaEntities())
                 {
                     var employee = db.Users.FirstOrDefault(e => e.EmployeeID == employeeId);
-                    if(employee != null)
+                    if (employee != null)
                     {
                         return employee.Email;
                     }
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 try
                 {
@@ -454,7 +454,7 @@ namespace VolanteNominaRC.Controllers
 
             sQuery = "SELECT CECODIRE, CETIPOPAGO, CEDESCPAGO, CEINGDEDUC, CETIPTRANS, CEDESCTRAN, CEVALTRANS, CECICLOPAG," +
             " CECODEMPLE, CENOMEMPLE, CENOMDEPTO, CENOMCARGO, CECORREOEL, CECUEBANCO, CENUSEGSOC, CENUMCEDUL, CEDESDIREC," +
-            "  CEDESCFPAG, CEDESCTCUE, CEBALAACTU, CETIPONOM, CECANTIDAD FROM [QS36F.RCNOCE00] WHERE CECODEMPLE = " + employeeId +
+            "  CEDESCFPAG, CEDESCTCUE, CEBALAACTU, CETIPONOM, CECANTIDAD, CEVLAPLIRE FROM [QS36F.RCNOCE00] WHERE CECODEMPLE = " + employeeId +
             " AND CECICLOPAG = '" + cycle + "' AND CETIPOPAGO = '" + paytype + "' ORDER BY CEINGDEDUC DESC";
 
 
@@ -512,6 +512,20 @@ namespace VolanteNominaRC.Controllers
                 foreach (DataRow row in data.Tables[0].Rows)
                 {
                     amount = decimal.Parse(row.ItemArray[6].ToString());
+                    
+                    //Substract SALDO A FAVOR to D-40 concept
+                    try
+                    {
+                        if (!string.IsNullOrEmpty(row.ItemArray[22].ToString()))
+                        {
+                            decimal SaldoAFavor = decimal.Parse(row.ItemArray[22].ToString());
+                            amount -= SaldoAFavor > 0 ? SaldoAFavor : 0;
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.ToString());
+                    }
 
                     decimal balance = decimal.Parse(row.ItemArray[19].ToString());
 
