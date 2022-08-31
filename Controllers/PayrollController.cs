@@ -34,9 +34,9 @@ namespace VolanteNominaRC.Controllers
 
         public ActionResult ViewPayroll(string period, string paytype)
         {
-            if (Session["role"] == null) return RedirectToAction("Login", "User");
+            //if (Session["role"] == null) return RedirectToAction("Login", "User");
 
-            string EmployeeId = Session["employeeId"].ToString();
+            string EmployeeId = "3099";//Session["employeeId"].ToString();
             int fortnight = int.Parse(period.Substring(period.Length - 2, 2));
             string year = period.Substring(0, 4);
             string month = period.Substring(4, 2);
