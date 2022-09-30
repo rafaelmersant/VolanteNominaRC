@@ -267,6 +267,8 @@ namespace VolanteNominaRC.Controllers
 
             bool sent = false;
 
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11;
+
             SmtpClient smtp = new SmtpClient
             {
                 Host = ConfigurationManager.AppSettings["smtpClient"],
@@ -297,6 +299,8 @@ namespace VolanteNominaRC.Controllers
         {
             string content = "Su nueva contraseña es: <b>" + newPassword + "</b>";
 
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11;
+
             SmtpClient smtp = new SmtpClient
             {
                 Host = ConfigurationManager.AppSettings["smtpClient"],
@@ -304,7 +308,7 @@ namespace VolanteNominaRC.Controllers
                 UseDefaultCredentials = false,
                 DeliveryMethod = SmtpDeliveryMethod.Network,
                 Credentials = new NetworkCredential(ConfigurationManager.AppSettings["usrEmail"], ConfigurationManager.AppSettings["pwdEmail"]),
-                EnableSsl = true,
+                EnableSsl = false,
             };
 
             MailMessage message = new MailMessage();

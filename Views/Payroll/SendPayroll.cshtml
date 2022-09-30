@@ -26,10 +26,10 @@
                     <div class="col-3 mb-3">
                         <label for="validationDefault01">Año</label>
                         <select class="custom-select" id="yearSelected" required>
-                            <option value="2019">2019</option>
+                            @*<option value="2019">2019</option>
                             <option value="2020">2020</option>
                             <option value="2021">2021</option>
-                            <option value="2022">2022</option>
+                            <option value="2022">2022</option>*@
                         </select>
                     </div>
                     <div class="col-4 mb-3">
@@ -73,7 +73,7 @@
                             <label><input type="radio" name="radioSend" value="oneDirectorate"><span class="ml-2">Enviar a una dirección</span></label>
                         </div>
                         <div class="ml-1">
-                            <select class="form-control" id="directorateSelected">
+                            <select class="form-control" id="directorateSelected" style="min-width: 340px">
                                 <option>DIRECCION DE OPERACIONES</option>
                                 <option>DIRECCION GESTION HUMANA</option>
                                 <option>DIRECCION COMERCIAL</option>
@@ -176,6 +176,12 @@
         $("#loadding").hide()
         refreshPayrollsSent()
 
+        const currentYear = new Date().getFullYear();
+        yearSelect = document.getElementById('yearSelected');
+        for (let _year = currentYear; _year >= 2019; _year--) {
+            yearSelect.options[yearSelect.options.length] = new Option(`${_year}`, `${_year}`);
+        }
+        
         $("#btnSend").on('click', function (e) {
             e.preventDefault()
             $("#successMessage").hide()
